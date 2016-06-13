@@ -1,7 +1,12 @@
-import angular from 'angular'; // eslint-disable-line
+const angular = require('angular'); // eslint-disable-line
 
-import '../style/app.css';
+require('../style/app.css');
 
-const MODULE_NAME = 'app';
+const MODULE_NAME = 'talkative';
 
-export default MODULE_NAME;
+// Declare components
+angular.module(MODULE_NAME, [])
+  .component('userPrefs', {
+    template: require('./components/user-prefs.html'),
+    controller: require('./components/user-prefs')
+  });
