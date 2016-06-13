@@ -1,7 +1,27 @@
 <form class="user-preferences">
-  <h3>Your current phone number is:</h3>
+  <h3>Phone Number</h3>
+  <p>Your current phone number is:</p>
   <label>Edit Phone Number</label>
   <input type="text" ng-model="$ctrl.phoneNumber"/>
-  <input type="submit" value="Submit" class="button"></button>
+  <input type="submit" value="Save Changes" class="button"></button>
   <hr/>
+  <h3>Prompt Frequency</h3>
+  <p>Your current prompt frequency is ___</p>
+  <div>
+    <label>Choose an interval:</label>
+      <select id="select" required>
+        <option value="">-----</option>
+        <option value="5">Every 5 minutes</option>
+        <option value="10">Every 10 minutes</option>
+        <option value="15">Every 15 minutes</option>
+        <option value="30">Every 30 minutes</option>
+        <option value="60">Every 1 hour</option>
+        <option value="120">Every 2 hours</option>
+        <option value="180">Every 3 hours</option>
+        <option value="twice">Twice daily</option>
+        <option value="mornings">Mornings</option>
+        <option value="evenings">Evenings</option>
+      </select>
+  </div>
+  <input type="submit" value="Save Changes" class="button"></button>
 </form>
