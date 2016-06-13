@@ -17,7 +17,14 @@
   },
   "homepage": "https://github.com/winterreise/talkative#readme",
   "dependencies": {
+    "debug": "^2.2.0",
     "es6-promisify": "^4.1.0",
+    "koa": "^1.2.0",
+    "koa-better-body": "^2.0.1",
+    "koa-bouncer": "^5.0.1",
+    "koa-passport": "^1.3.1",
+    "koa-router": "^5.4.0",
+    "nodemon": "^1.9.2",
     "pg": "^5.1.0"
   }
 }
