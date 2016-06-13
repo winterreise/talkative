@@ -1,0 +1,19 @@
+{
+  "name": "talkative-node",
+  "version": "0.0.1",
+  "description": "talkative's node backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/winterreise/talkative.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/winterreise/talkative/issues"
+  },
+  "homepage": "https://github.com/winterreise/talkative#readme"
+}
