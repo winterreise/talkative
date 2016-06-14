@@ -1,4 +1,66 @@
 <form class="user-preferences">
-  <label>Phone #</label>
-  <input type="number" ng-model="$ctrl.phoneNumber"/>
+  <h3>Phone Number</h3>
+  <div class="input-group">
+    <label ng-hide="$ctrl.editingPhoneNumber" class="input-group-label">Current Phone Number</label>
+    <label ng-show="$ctrl.editingPhoneNumber" class="input-group-label">Edit Phone Number</label>
+    <input type="text" class="input-group-field" ng-model="$ctrl.phoneNumber" ng-disabled="!$ctrl.editingPhoneNumber"/>
+    <div class="input-group-button">
+      <input type="button" value="Edit" class="button"  ng-hide="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
+      <input type="button" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
+    </div>
+  </div>
+  <hr/>
+
+  <h3>Content Mix</h3>
+  <div class="row">
+    <p class="small-3 large-2 columns content-label">
+      News
+    </p>
+    <div class="small-9 large-10 columns">
+      <input type="range" min="0" max="10" step="1" ng-model="$ctrl.newsFreq">
+    </div>
+  </div>
+  <div class="row">
+    <p class="small-3 large-2 columns content-label">
+      Entertainment
+    </p>
+    <div class="small-9 large-10 columns">
+      <input type="range" min="0" max="10" step="1" ng-model="$ctrl.entertainmentFreq">
+    </div>
+  </div>
+  <div class="row">
+    <p class="small-3 large-2 columns content-label">
+      Facts
+    </p>
+    <div class="small-9 large-10 columns">
+      <input type="range" min="0" max="10" step="1" ng-model="$ctrl.factsFreq">
+    </div>
+  </div>
+  <div class="row">
+    <p class="small-3 large-2 columns content-label">
+      Romance
+    </p>
+    <div class="small-9 large-10 columns">
+      <input type="range" min="0" max="10" step="1" ng-model="$ctrl.romanceFreq">
+    </div>
+  </div>
+  <hr/>
+
+  <h3>Prompt Frequency</h3>
+  <p>Your current prompt frequency is {{$ctrl.promptInterval}}</p>
+  <div>
+    <label>Select a frequency:</label>
+      <select id="select" ng-model="$ctrl.promptInterval" required>
+        <option value="5">Every 5 minutes</option>
+        <option value="10">Every 10 minutes</option>
+        <option value="15">Every 15 minutes</option>
+        <option value="30">Every 30 minutes</option>
+        <option value="60">Every 1 hour</option>
+        <option value="120">Every 2 hours</option>
+        <option value="180">Every 3 hours</option>
+        <option value="twice">Twice daily</option>
+        <option value="mornings">Mornings</option>
+        <option value="evenings">Evenings</option>
+      </select>
+  </div>
 </form>
