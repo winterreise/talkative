@@ -1,10 +1,35 @@
 <form class="user-preferences">
-  <h3>Phone Number</h3>
-  <p>Your current phone number is:</p>
-  <label>Edit Phone Number</label>
-  <input type="text" ng-model="$ctrl.phoneNumber"/>
   <input type="submit" value="Save Changes" class="button"></button>
+
+  <h3>Phone Number</h3>
+  <label ng-hide="$ctrl.editingPhoneNumber">Your current phone number is:</label>
+  <label ng-show="$ctrl.editingPhoneNumber">Edit Phone Number</label>
+  <input type="text" ng-model="$ctrl.phoneNumber" ng-disabled="!$ctrl.editingPhoneNumber"/>
+  <input type="button" value="Edit" class="button"  ng-hide="$ctrl.editingPhoneNumber" ng-click="$ctrl.editingPhoneNumber = true"></button>
+  <input type="button" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.editingPhoneNumber = false"></button>
   <hr/>
+
+  <h3>Content Mix</h3>
+  <ul>
+    <li>News</li>
+    <li>Entertainment</li>
+    <li>Facts</li>
+    <li>Romance</li>
+  </ul>
+  <div class="row">
+    <div class="small-10 columns">
+      <div class="slider" data-slider data-initial-start="5" data-step="1" data-end="10">
+        <span class="slider-handle"  data-slider-handle role="slider" tabindex="1"></span>
+        <span class="slider-fill" data-slider-fill></span>
+        <input type="hidden">
+      </div>
+    </div>
+    <div class="small-2 columns">
+      <input type="number" id="sliderOutput2">
+    </div>
+  </div>
+  <hr/>
+
   <h3>Prompt Frequency</h3>
   <p>Your current prompt frequency is ___</p>
   <div>
@@ -23,5 +48,4 @@
         <option value="evenings">Evenings</option>
       </select>
   </div>
-  <input type="submit" value="Save Changes" class="button"></button>
 </form>
