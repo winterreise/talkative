@@ -46,7 +46,15 @@
   </div>
   <hr/>
 
-  <h3>Prompt Frequency</h3>
+  <h3>Frequency</h3>
+  <div class="switch large">
+    <input class="switch-input" id="on-off" type="checkbox" name="onOffSwitch">
+    <label class="switch-paddle" for="on-off">
+      <span class="show-for-sr">test</span>
+      <span class="switch-active" aria-hidden="true">On</span>
+      <span class="switch-inactive" aria-hidden="true">Off</span>
+    </label>
+  </div>
   <p>Your current prompt frequency is {{$ctrl.promptInterval}}</p>
   <div>
     <label>Select a frequency:</label>
