@@ -1,21 +1,27 @@
 nav {
   background-color: black;
   padding: 15px;
-  margin-top: -40px;
+  margin-right: 40px;
   margin-left: auto;
   width: 380px;
   border-radius: 0 0 25px 25px;
 }
 
 body {
-  padding: 40px;
 }
 main {
+  padding: 40px;
   max-width: 1024px;
   margin-left: auto;
   margin-right: auto;
 }
 
 input[type="range"] {
-  width: 100%;
+  width: 80%;
+}
+
+span.prompt-toggle {
+  position: relative;
+  padding-left: 10px;
+  top: 5px;
 }

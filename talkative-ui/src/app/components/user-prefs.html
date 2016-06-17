@@ -1,74 +1,88 @@
-<form class="user-preferences">
+<section class="user-preferences">
   <h3>Phone Number</h3>
-  <div class="input-group">
-    <label ng-hide="$ctrl.editingPhoneNumber" class="input-group-label">Current Phone Number</label>
-    <label ng-show="$ctrl.editingPhoneNumber" class="input-group-label">Edit Phone Number</label>
-    <input type="text" class="input-group-field" ng-model="$ctrl.phoneNumber" ng-disabled="!$ctrl.editingPhoneNumber"/>
-    <div class="input-group-button">
-      <input type="button" value="Edit" class="button"  ng-hide="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
-      <input type="button" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
+  <form>
+    <div class="input-group">
+      <label ng-hide="$ctrl.editingPhoneNumber" class="input-group-label">Current</label>
+      <label ng-show="$ctrl.editingPhoneNumber" class="input-group-label">Edit</label>
+      <input type="text" class="input-group-field" ng-model="$ctrl.phoneNumber" ng-disabled="!$ctrl.editingPhoneNumber"/>
+      <div class="input-group-button">
+        <input type="button" value="Edit" class="button"  ng-hide="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
+        <input type="submit" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
+      </div>
     </div>
-  </div>
+  </form>
   <hr/>
 
-  <h3>Content Mix</h3>
+  <h3>
+    Talkative Prompts
+    <span class="switch prompt-toggle">
+      <input class="switch-input" id="on-off" type="checkbox" name="onOffSwitch" ng-model="$ctrl.freqEnabled">
+      <label class="switch-paddle" for="on-off">
+        <span class="show-for-sr">test</span>
+        <span class="switch-active" aria-hidden="true">On</span>
+        <span class="switch-inactive" aria-hidden="true">Off</span>
+      </label>
+    </span>
+  </h3>
+
+  <h4>Content Mix</h4>
+  <form>
+  <fieldset ng-disabled="!$ctrl.freqEnabled">
   <div class="row">
-    <p class="small-3 large-2 columns content-label">
+    <p class="medium-3 large-2 columns content-label">
       News
     </p>
-    <div class="small-9 large-10 columns">
+    <div class="medium-9 large-10 columns">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementNewsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.newsFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
       <input type="range" min="0" max="10" step="1" ng-model="$ctrl.newsFreq">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementNewsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.newsFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
   </div>
   <div class="row">
-    <p class="small-3 large-2 columns content-label">
+    <p class="medium-3 large-2 columns content-label">
       Entertainment
     </p>
-    <div class="small-9 large-10 columns">
+    <div class="medium-9 large-10 columns">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementEntertainmentFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.entertainmentFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
       <input type="range" min="0" max="10" step="1" ng-model="$ctrl.entertainmentFreq">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementEntertainmentFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.entertainmentFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
   </div>
   <div class="row">
-    <p class="small-3 large-2 columns content-label">
+    <p class="medium-3 large-2 columns content-label">
       Facts
     </p>
-    <div class="small-9 large-10 columns">
+    <div class="medium-9 large-10 columns">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementFactsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.factsFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
       <input type="range" min="0" max="10" step="1" ng-model="$ctrl.factsFreq">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementFactsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.factsFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
   </div>
   <div class="row">
-    <p class="small-3 large-2 columns content-label">
+    <p class="medium-3 large-2 columns content-label">
       Romance
     </p>
-    <div class="small-9 large-10 columns">
+    <div class="medium-9 large-10 columns">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementRomanceFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.romanceFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
       <input type="range" min="0" max="10" step="1" ng-model="$ctrl.romanceFreq">
+      <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementRomanceFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.romanceFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
     </div>
   </div>
-  <hr/>
+  </fieldset>
+  </form>
 
-  <h3>Frequency</h3>
-  <div class="switch large">
-    <input class="switch-input" id="on-off" type="checkbox" name="onOffSwitch">
-    <label class="switch-paddle" for="on-off">
-      <span class="show-for-sr">test</span>
-      <span class="switch-active" aria-hidden="true">On</span>
-      <span class="switch-inactive" aria-hidden="true">Off</span>
-    </label>
-  </div>
-  <p>Your current prompt frequency is {{$ctrl.promptInterval}}</p>
-  <div>
-    <label>Select a frequency:</label>
-      <select id="select" ng-model="$ctrl.promptInterval" required>
-        <option value="5">Every 5 minutes</option>
-        <option value="10">Every 10 minutes</option>
-        <option value="15">Every 15 minutes</option>
-        <option value="30">Every 30 minutes</option>
-        <option value="60">Every 1 hour</option>
-        <option value="120">Every 2 hours</option>
-        <option value="180">Every 3 hours</option>
-        <option value="twice">Twice daily</option>
-        <option value="mornings">Mornings</option>
-        <option value="evenings">Evenings</option>
-      </select>
-  </div>
-</form>
+  <h4>Frequency</h4>
+  <form>
+  <fieldset ng-disabled="!$ctrl.freqEnabled">
+    <p>Your current prompt frequency is {{$ctrl.promptInterval.text.toLowerCase()}}</p>
+    <div>
+      <label>Select a frequency:</label>
+        <select
+          ng-options="e.text for e in $ctrl.frequencyOptions track by e.id"
+          ng-model="$ctrl.promptInterval"
+          required>
+        </select>
+    </div>
+  </fieldset>
+  </form>
+</section>
