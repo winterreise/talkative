@@ -7,13 +7,27 @@ nav {
   border-radius: 0 0 25px 25px;
 }
 
-body {
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Khula', sans-serif;
+  color: #222;
 }
-main {
-  padding: 40px;
-  max-width: 1024px;
+
+section {
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+.g-signin {
+  margin-top: 70px;
+  display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+.hero-iphone {
+  height: 650px;
+  width: auto;
+  margin-left: 200px;
 }
 
 input[type="range"] {
@@ -24,4 +38,42 @@ span.prompt-toggle {
   position: relative;
   padding-left: 10px;
   top: 5px;
+}
+
+header#page-header {
+  height: 500px;
+  background: #000;
+  color: #efefef;
+  font-family: 'Khula', sans-serif;
+}
+
+header#page-header h1 {
+  color: #efefef;
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+  line-height: 0.7;
+
+}
+
+header#page-header h1 small {
+  font-size: 50%;
+}
+
+header#page-header > div.row {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+footer#page-footer {
+    padding-top: 3em;
+    padding-bottom: 3em;
+    border-top: 1px solid #cecece;
+}
+
+section.user-preferences {
+  padding: 40px;
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
 }
