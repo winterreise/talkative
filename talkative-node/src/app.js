@@ -4,30 +4,32 @@ const app = koa();
 const koaPg = require('koa-pg');
 const jsonResp = require('koa-json-response');
 const route = require('koa-route');
+const body = require('koa-better-body');
 
 // APP CONFIG
 
 // trust proxy
-app.proxy = true
+app.proxy = true;
 
 // sessions
-let session = require('koa-generic-session')
-app.keys = ['your-session-secret']
-app.use(session())
+let session = require('koa-generic-session');
+app.keys = ['your-session-secret'];
+app.use(session());
 
 // body parser
-const bodyParser = require('koa-bodyparser')
-app.use(bodyParser())
+const bodyParser = require('koa-bodyparser');
+app.use(bodyParser());
 
 // authentication
-require('./auth')
-const passport = require('koa-passport')
-app.use(passport.initialize())
-app.use(passport.session())
+require('./auth');
+const passport = require('koa-passport');
+app.use(passport.initialize());
+app.use(passport.session());
 
 
-app.use(
-  jsonResp())
+app
+  .use(jsonResp())
+  .use(body())
   .use(koaPg(config.DATABASE_URL))
   .listen(8080);
 
@@ -83,12 +85,20 @@ app.use(route.get('/api/v1/users/', user.all));
 app.use(route.get('/api/v1/users/active', user.active));
 // INACTIVE USERS INDEX
 app.use(route.get('/api/v1/users/inactive', user.inactive));
+// UPDATE USER (:id)
+app.use(route.post('/api/v1/users/:id', user.update));
 // USER SHOW (:id)
 app.use(route.get('/api/v1/users/:id', user.show));
 
 
 // AUTHENTICATION
-app.use(route.get('/api/v1/checkauthentication', user.checkauthentication));
+app.use(route.get('/api/v1/checkauthentication', function*(next) {
+  if (this.isAuthenticated()) {
+    return this.jsonResp(200, 'Success');
+  } else {
+    return this.jsonResp(401, 'Unauthorized');
+  }
+}));
 
 
 // append view renderer
@@ -99,13 +109,13 @@ app.use(views('./views', {
 }));
 
 // public routes
-var Router = require('koa-router')
+var Router = require('koa-router');
 
-var public = new Router()
+var public = new Router();
 
 public.get('/', function*() {
-  this.body = yield this.render('login')
-})
+  this.body = yield this.render('login');
+});
 
 
 // POST /login
@@ -114,61 +124,61 @@ public.post('/login',
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+);
 
 public.get('/logout', function*(next) {
-  this.logout()
-  this.redirect('/')
-})
+  this.logout();
+  this.redirect('/');
+});
 
 public.get('/auth/facebook',
   passport.authenticate('facebook')
-)
+);
 
 public.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+);
 
 public.get('/auth/twitter',
   passport.authenticate('twitter')
-)
+);
 
 public.get('/auth/twitter/callback',
   passport.authenticate('twitter', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+);
 
 public.get('/auth/google',
   passport.authenticate('google')
-)
+);
 
 public.get('/auth/google/callback',
   passport.authenticate('google', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
-)
+);
 
-app.use(public.middleware())
+app.use(public.middleware());
 
 // Require authentication for now
 app.use(function*(next) {
   if (this.isAuthenticated()) {
-    yield next
+    yield next;
   } else {
-    this.redirect('/')
+    this.redirect('/');
   }
-})
+});
 
-var secured = new Router()
+const secured = new Router();
 
 secured.get('/app', function*() {
-  this.body = yield this.render('app')
-})
+  this.body = yield this.render('app');
+});
 
-app.use(secured.middleware())
+app.use(secured.middleware());
