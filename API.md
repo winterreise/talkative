@@ -75,7 +75,7 @@ Callback URL: `GET /auth/twitter/callback`
 
 `GET /api/v1/prompts/news/`
 
-### Entertinament Prompts
+### Entertainament Prompts
 
 `GET /api/v1/prompts/entertainment/`
 
