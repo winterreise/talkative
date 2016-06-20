@@ -35,9 +35,9 @@ app
 
 // REQUIRE CONTROLLERS
 
-const User = require('./users');
-const Prompt = require('./prompts');
-const Burst = require('./bursts');
+const User = require('./controllers/users');
+const Prompt = require('./controllers/prompts');
+const Burst = require('./controllers/bursts');
 
 /// ROUTES
 
