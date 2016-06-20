@@ -22,8 +22,8 @@ passport.use(new LocalStrategy(function(username, password, done) {
 
 var FacebookStrategy = require('passport-facebook').Strategy
 passport.use(new FacebookStrategy({
-    clientID: 'your-client-id',
-    clientSecret: 'your-secret',
+    clientID: '600680406767470',
+    clientSecret: 'ab2b159cf0a51919ed9406a753330857',
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/facebook/callback'
   },
   function(token, tokenSecret, profile, done) {
@@ -46,8 +46,8 @@ passport.use(new TwitterStrategy({
 
 var GoogleStrategy = require('passport-google-auth').Strategy
 passport.use(new GoogleStrategy({
-    clientId: 'your-client-id',
-    clientSecret: 'your-secret',
+    clientId: '153427664156-2feen2b5tdu0hkcea6jlsb0s0h6listk.apps.googleusercontent.com',
+    clientSecret: 'bXEp_2YxBTCQr4WMOdtIh0xt',
     callbackURL: 'http://localhost:' + (process.env.PORT || 3000) + '/auth/google/callback'
   },
   function(token, tokenSecret, profile, done) {
