@@ -50,7 +50,8 @@ module.exports = class UserPreferencesCtrl {
   }
 
   // turn off foundation when this component goes away
-  $onDestroy() {
-    $(this.$element).foundation('destroy');
-  }
+  // $onDestroy() {
+  //   TODO this doesn't seem to work properly
+  //   $(this.$element).foundation('destroy');
+  // }
 };
