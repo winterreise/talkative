@@ -1,14 +1,15 @@
 'use strict';
 
-const config = require('./config');
-const koa = require('koa');
-const app = koa();
-const koaPg = require('koa-pg');
-const jsonResp = require('koa-json-response');
-const route = require('koa-route');
 const body = require('koa-better-body');
+const config = require('./config');
+const jsonResp = require('koa-json-response');
+const koa = require('koa');
+const koaPg = require('koa-pg');
+const Router = require('koa-router');
+const twilio = require('twilio');
 
 // APP CONFIG
+const app = koa();
 
 // trust proxy
 app.proxy = true;
@@ -33,11 +34,7 @@ app
   .use(jsonResp())
   .use(body())
   .use(koaPg(config.DATABASE_URL))
-  .use(function*(next) {
-    console.log(`Requesting: ${this.req.url}`);
-    yield next;
-  })
-  .listen(8080);
+  .listen(process.env.PORT || 8080);
 
 // REQUIRE CONTROLLERS
 
@@ -46,39 +43,79 @@ const Prompt = require('./controllers/prompts');
 const Burst = require('./controllers/bursts');
 
 /// ROUTES
+const router = new Router();
 
 // API BASE ROUTE
-app.use(route.get('/api/v1/', function * () {
+router.get('/api/v1/', function * () {
   return this.jsonResp(200, 'Welcome to the Talkative API');
-}));
+});
+
+// TWILIO CALLBACKS
+
+router.get('/api/v1/twilio/', function * () {
+  console.log('Received GET call to /api/v1/twilio');
+  var resp = new twilio.TwimlResponse();
+  resp.say('Understood');
+  let responseString = resp.toString();
+  //console.log(responseString);
+  this.body = responseString;
+});
+
+router.post('/api/v1/twilio/', function * () {
+  console.log('Received POST call to /api/v1/twilio');
+  var resp = new twilio.TwimlResponse();
+  resp.say('Understood');
+  let responseString = resp.toString();
+  //console.log(responseString);
+  this.body = responseString;
+});
+
+
+router.get('/twilio/', function * () {
+  console.log('Received GET call to /api/v1/twilio');
+  var resp = new twilio.TwimlResponse();
+  resp.say('Understood');
+  let responseString = resp.toString();
+  //console.log(responseString);
+  this.body = responseString;
+});
+
+router.post('/twilio/', function * () {
+  console.log('Received POST call to /api/v1/twilio');
+  var resp = new twilio.TwimlResponse();
+  resp.say('Understood');
+  let responseString = resp.toString();
+  //console.log(responseString);
+  this.body = responseString;
+});
 
 
 // PROMPT ROUTES
 
 const prompt = new Prompt();
 // ALL PROMPTS INDEX
-app.use(route.get('/api/v1/prompts/', prompt.all));
+router.get('/api/v1/prompts', prompt.all);
 // NEWS PROMPTS INDEX
-app.use(route.get('/api/v1/prompts/news/', prompt.news));
+router.get('/api/v1/prompts/news/', prompt.news);
 // ENTERTAINMENT PROMPTS INDEX
-app.use(route.get('/api/v1/prompts/entertainment/', prompt.entertainment));
+router.get('/api/v1/prompts/entertainment/', prompt.entertainment);
 // FACTS PROMPTS INDEX
-app.use(route.get('/api/v1/prompts/facts/', prompt.facts));
+router.get('/api/v1/prompts/facts/', prompt.facts);
 // PROMPT SHOW (:id)
-app.use(route.get('/api/v1/prompts/:id', prompt.show));
+router.get('/api/v1/prompts/:id', prompt.show);
 
 
 // BURST ROUTES
 
 const burst = new Burst();
 // ALL BURSTS INDEX
-app.use(route.get('/api/v1/bursts/', burst.all));
+router.get('/api/v1/bursts/', burst.all);
 // SENT BURSTS INDEX FOR USER (:userId)
-app.use(route.get('/api/v1/bursts/:userId/sent/', burst.sent));
+router.get('/api/v1/bursts/:userId/sent/', burst.sent);
 // UNSENT BURSTS INDEX FOR USER (:userId)
-app.use(route.get('/api/v1/bursts/:userId/unsent/', burst.unsent));
+router.get('/api/v1/bursts/:userId/unsent/', burst.unsent);
 // BURST SHOW (:userId)
-app.use(route.get('/api/v1/bursts/:userId/', burst.show));
+router.get('/api/v1/bursts/:userId/', burst.show);
 
 
 
@@ -86,25 +123,25 @@ app.use(route.get('/api/v1/bursts/:userId/', burst.show));
 
 const user = new User();
 // ALL USERS INDEX
-app.use(route.get('/api/v1/users/', user.all));
+router.get('/api/v1/users/', user.all);
 // ACTIVE USERS INDEX
-app.use(route.get('/api/v1/users/active', user.active));
+router.get('/api/v1/users/active', user.active);
 // INACTIVE USERS INDEX
-app.use(route.get('/api/v1/users/inactive', user.inactive));
+router.get('/api/v1/users/inactive', user.inactive);
 // UPDATE USER (:id)
-app.use(route.post('/api/v1/users/:id', user.update));
+router.post('/api/v1/users/:id', user.update);
 // USER SHOW (:id)
-app.use(route.get('/api/v1/users/:id', user.show));
+router.get('/api/v1/users/:id', user.show);
 
 
 // AUTHENTICATION
-app.use(route.get('/api/v1/checkauthentication', function*(next) {
+router.get('/api/v1/checkauthentication', function*() {
   if (this.isAuthenticated()) {
     return this.jsonResp(200, 'Success');
   } else {
     return this.jsonResp(401, 'Unauthorized');
   }
-}));
+});
 
 
 // append view renderer
@@ -114,77 +151,74 @@ app.use(views('./views', {
   cache: false
 }));
 
-// public routes
-const Router = require('koa-router');
 
-const publicRoutes = new Router();
+// PUBLIC ROUTES
+// HOME PAGE
 
-publicRoutes.get('/', function*() {
+router.get('/', function *() {
   this.body = yield this.render('login');
 });
 
 
 // POST /login
-publicRoutes.post('/login',
+
+router.post('/login',
   passport.authenticate('local', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
 );
 
-publicRoutes.get('/logout', function*(next) {
+router.get('/logout', function *() {
   this.logout();
   this.redirect('/');
 });
 
-publicRoutes.get('/auth/facebook',
-  passport.authenticate('facebook')
-);
+// router.get('/auth/facebook',
+//   passport.authenticate('facebook')
+// );
+//
+// router.get('/auth/facebook/callback',
+//   passport.authenticate('facebook', {
+//     successRedirect: '/#/dashboard',
+//     failureRedirect: '/'
+//   })
+// );
+//
+// router.get('/auth/twitter',
+//   passport.authenticate('twitter')
+// );
+//
+// router.get('/auth/twitter/callback',
+//   passport.authenticate('twitter', {
+//     successRedirect: '/#/dashboard',
+//     failureRedirect: '/'
+//   })
+// );
 
-publicRoutes.get('/auth/facebook/callback',
-  passport.authenticate('facebook', {
-    successRedirect: '/#/dashboard',
-    failureRedirect: '/'
-  })
-);
-
-publicRoutes.get('/auth/twitter',
-  passport.authenticate('twitter')
-);
-
-publicRoutes.get('/auth/twitter/callback',
-  passport.authenticate('twitter', {
-    successRedirect: '/#/dashboard',
-    failureRedirect: '/'
-  })
-);
-
-publicRoutes.get('/auth/google',
+router.get('/auth/google',
   passport.authenticate('google')
 );
 
-publicRoutes.get('/auth/google/callback',
+router.get('/auth/google/callback',
   passport.authenticate('google', {
     successRedirect: '/#/dashboard',
     failureRedirect: '/'
   })
 );
 
-app.use(publicRoutes.middleware());
-
 // Require authentication for now
-app.use(function*(next) {
-  if (this.isAuthenticated()) {
-    yield next;
-  } else {
-    this.redirect('/');
-  }
-});
+// app.use(function *(next) {
+//   if (this.isAuthenticated()) {
+//     yield next;
+//   } else {
+//     this.redirect('/');
+//   }
+// });
 
-const secured = new Router();
-
-secured.get('/app', function*() {
+router.get('/app', function *() {
   this.body = yield this.render('app');
 });
 
-app.use(secured.middleware());
+app.use(router.middleware());
+app.use(router.allowedMethods());
