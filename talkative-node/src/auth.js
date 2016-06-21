@@ -2,25 +2,13 @@
 
 const passport = require('koa-passport');
 
-const testUser = { id: 1, username: 'test' };
-
 passport.serializeUser(function(user, done) {
   done(null, testUser.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  done(null, testUser);
+  done(null, user);
 });
-
-const LocalStrategy = require('passport-local').Strategy;
-passport.use(new LocalStrategy(function(username, password, done) {
-  // retrieve user ...
-  if (username === 'test' && password === 'test') {
-    done(null, testUser);
-  } else {
-    done(null, false);
-  }
-}));
 
 const FacebookStrategy = require('passport-facebook').Strategy;
 passport.use(new FacebookStrategy({
@@ -30,7 +18,7 @@ passport.use(new FacebookStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, testUser);
+    done(null, user);
   }
 ));
 
@@ -42,7 +30,7 @@ passport.use(new TwitterStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, testUser);
+    done(null, user);
   }
 ));
 
@@ -54,6 +42,6 @@ passport.use(new GoogleStrategy({
   },
   function(token, tokenSecret, profile, done) {
     // retrieve user ...
-    done(null, testUser);
+    done(null, user);
   }
 ));

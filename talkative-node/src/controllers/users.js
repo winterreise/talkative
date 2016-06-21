@@ -25,7 +25,7 @@ class User {
     return this.jsonResp(200, users);
   }
 
-  *show() {
+  *show(id) {
     const result = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active,factsweight,entertainmentweight,newsweight FROM users WHERE id = ${id}`);
     if (result.rows.length === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
@@ -38,16 +38,16 @@ class User {
 
   *update(id) {
     let url = this.req._parsedUrl;
-    let params = url.query.split("&");
+    let params = url.query.split('&');
     let paramsObj = {};
     params.forEach(function(p){
-      paramsObj[p.split("=")[0]] = p.split("=")[1];
-    })
+      paramsObj[p.split('=')[0]] = p.split('=')[1];
+    });
     const result = yield this.pg.db.client.query_(`UPDATE users SET phone = ${paramsObj.phone}, frequency = ${paramsObj.frequency}, active = ${paramsObj.active}, factsweight = ${paramsObj.factsweight}, entertainmentweight = ${paramsObj.entertainmentweight}, newsweight = ${paramsObj.newsweight} WHERE id = ${id}`);
     if (result.rowCount === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
-      const user = result.rows[0];
+      // TO DO Return actual user, not the params
       return this.jsonResp(200, paramsObj);
     }
   }
