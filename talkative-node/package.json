@@ -24,7 +24,7 @@
     "eslint": "2.8.0",
     "handlebars": "4.0.5",
     "koa": "1.2.0",
-    "koa-better-body": "2.0.1",
+    "koa-better-body": "1.0.17",
     "koa-bodyparser": "2.2.0",
     "koa-bouncer": "5.0.1",
     "koa-convert": "1.2.0",
