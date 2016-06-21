@@ -1,5 +1,7 @@
 'use strict';
 
+// NOT WORKING FOR THE MOMENT. NEEDS A DEBUG or REFACTOR
+
 const config = require('../config');
 const request = require('request');
 const pg = require('pg');
