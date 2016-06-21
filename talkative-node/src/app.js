@@ -31,8 +31,11 @@ app.use(passport.session());
 
 
 app
+  .use(function*(next) {
+    console.log(this.req.url);
+    yield next;
+  })
   .use(jsonResp())
-  .use(body())
   .use(koaPg(config.DATABASE_URL))
   .listen(process.env.PORT || 8080);
 
@@ -61,8 +64,9 @@ router.get('/api/v1/twilio/', function * () {
   this.body = responseString;
 });
 
-router.post('/api/v1/twilio/', function * () {
+router.post('/api/v1/twilio/', body(), function * () {
   console.log('Received POST call to /api/v1/twilio');
+  console.dir(this.request.body);
   var resp = new twilio.TwimlResponse();
   resp.say('Understood');
   let responseString = resp.toString();
@@ -129,7 +133,7 @@ router.get('/api/v1/users/active', user.active);
 // INACTIVE USERS INDEX
 router.get('/api/v1/users/inactive', user.inactive);
 // UPDATE USER (:id)
-router.post('/api/v1/users/:id', user.update);
+router.post('/api/v1/users/:id', body(), function*() {console.log(this.request.body);});// user.update);
 // USER SHOW (:id)
 router.get('/api/v1/users/:id', user.show);
 
