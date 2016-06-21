@@ -3,15 +3,13 @@
 const passport = require('koa-passport');
 const creds = require('../creds');
 
-var user = { id: 1, username: 'test' }
-
 passport.serializeUser(function(user, done) {
-  console.log(user);
+  // TODO do nothing
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log(id);
+  // TODO retrieve profile from db via id, and done(err, profile) - be sure to use err if there is one from the db
   done(null, id);
 });
 
@@ -39,14 +37,15 @@ passport.deserializeUser(function(id, done) {
 //   }
 // ));
 
-const GoogleStrategy = require('passport-google-auth').Strategy;
+const GoogleStrategy = require('passport-google-oauth2').Strategy;
 passport.use(new GoogleStrategy({
-    clientId: creds.google.clientId,
+    clientID: creds.google.clientId,
     clientSecret: creds.google.clientSecret,
-    callbackURL: 'http://localhost:' + (process.env.PORT || 8080) + '/auth/google/callback'
+    callbackURL: creds.google.callbackURL
   },
-  function(token, tokenSecret, profile, done) {
+  function(accessToken, refreshToken, profile, done) {
     // retrieve user ...
-    done(null, user);
+    // TODO insert profile into db with id
+    done(null, profile);
   }
 ));

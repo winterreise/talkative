@@ -204,13 +204,16 @@ module.exports = function makeWebpackConfig () {
       '/api/*': {
         target: 'http://localhost:8080'
         ,changeOrigin: true
-        // ,rewrite: function(req) {
-        //   req.url = req.url.replace(/^\/api/, '');
-        // }
+        ,rewrite: function(req) {
+          console.log(`Proxying: ${req.url}`);
+        }
       },
       '/auth/*': {
         target: 'http://localhost:8080'
         ,changeOrigin: true
+        ,rewrite: function(req) {
+          console.log(`Proxying: ${req.url}`);
+        }
       }
     }
   };
