@@ -105,6 +105,13 @@ input[type="range"] {
   width: 80%;
 }
 
+span.logout-button {
+  position: relative;
+  float: right;
+  top: 10px;
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+}
+
 span.prompt-toggle {
   position: relative;
   padding-left: 10px;
