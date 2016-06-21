@@ -1,3 +1,5 @@
+'use strict';
+
 const passport = require('koa-passport');
 
 passport.serializeUser(function(user, done) {

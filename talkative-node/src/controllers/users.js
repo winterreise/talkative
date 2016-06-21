@@ -1,3 +1,5 @@
+'use strict';
+
 // USERS CONTROLLER
 
 class User {

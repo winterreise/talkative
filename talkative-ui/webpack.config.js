@@ -45,7 +45,7 @@ module.exports = function makeWebpackConfig () {
 
     // Output path from the view of the page
     // Uses webpack-dev-server in development
-    publicPath: isProd ? '/' : 'http://localhost:8080/',
+    publicPath: isProd ? '/' : 'http://localhost:3000/',
 
     // Filename for entry points
     // Only adds hash in build mode
@@ -131,7 +131,7 @@ module.exports = function makeWebpackConfig () {
         /\.spec\.js$/
       ],
       loader: 'isparta-instrumenter'
-    })
+    });
   }
 
   /**
@@ -166,7 +166,7 @@ module.exports = function makeWebpackConfig () {
       // Extract css files
       // Disabled when in test mode or not in build mode
       new ExtractTextPlugin('[name].[hash].css', {disable: !isProd})
-    )
+    );
   }
 
   // Add build specific plugins
@@ -189,7 +189,21 @@ module.exports = function makeWebpackConfig () {
       new CopyWebpackPlugin([{
         from: __dirname + '/src/public'
       }])
-    )
+    );
+  }
+
+  if (!isProd) {
+    config.proxy = {
+      '/api/*': {
+        target: 'http://localhost:8080'
+        // ,rewrite: function(req) {
+        //   req.url = req.url.replace(/^\/api/, '');
+        // }
+      },
+      '/auth/*': {
+        target: 'http://localhost:8080'
+      }
+    };
   }
 
   /**

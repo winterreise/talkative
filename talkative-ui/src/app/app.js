@@ -24,7 +24,8 @@ app.config(['$routeProvider',
 // Declare components
 app
 .component('landingPage', {
-  template: require('./components/landing-page.html')
+  template: require('./components/landing-page.html'),
+  controller: require('./components/landing-page')
 })
 .component('talkativeNav', {
   template: require('./components/talkative-nav.html'),
