@@ -21,6 +21,9 @@ app.config(['$routeProvider',
   }
 ]);
 
+// Declare services
+app.factory('UserService', require('./services/user-service'));
+
 // Declare components
 app
 .component('landingPage', {
