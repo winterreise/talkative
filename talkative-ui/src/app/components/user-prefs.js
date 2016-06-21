@@ -1,6 +1,6 @@
 /* global $ */
 module.exports = class UserPreferencesCtrl {
-  constructor($element) {
+  constructor($element, UserService) {
     // lookup table of frequency choices
     this.frequencyOptions = [
       {id: '5', text: 'Every 5 minutes'},
@@ -55,3 +55,6 @@ module.exports = class UserPreferencesCtrl {
   //   $(this.$element).foundation('destroy');
   // }
 };
+
+// minification-safe
+module.exports.$inject = ['$element', 'UserService'];

@@ -17,3 +17,6 @@ module.exports = class LandingPageCtrl {
     }
   }
 };
+
+// minification-safe
+module.exports.$inject = ['$interval'];

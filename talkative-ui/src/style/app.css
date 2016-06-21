@@ -204,7 +204,7 @@ div.hero-iphone .fact2 {
   position: absolute;
   top: 0;
   left: 0;
-  transition: 0.25s all ease-in;
+  transition: 0.3s all ease-in;
   opacity: 1;
 }
 div.hero-iphone .base {
