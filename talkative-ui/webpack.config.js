@@ -192,20 +192,6 @@ module.exports = function makeWebpackConfig () {
     );
   }
 
-  if (!isProd) {
-    config.proxy = {
-      '/api/*': {
-        target: 'http://localhost:8080'
-        // ,rewrite: function(req) {
-        //   req.url = req.url.replace(/^\/api/, '');
-        // }
-      },
-      '/auth/*': {
-        target: 'http://localhost:8080'
-      }
-    };
-  }
-
   /**
    * Dev server configuration
    * Reference: http://webpack.github.io/docs/configuration.html#devserver
@@ -213,7 +199,20 @@ module.exports = function makeWebpackConfig () {
    */
   config.devServer = {
     contentBase: './src/public',
-    stats: 'minimal'
+    stats: 'minimal',
+    proxy: {
+      '/api/*': {
+        target: 'http://localhost:8080'
+        ,changeOrigin: true
+        // ,rewrite: function(req) {
+        //   req.url = req.url.replace(/^\/api/, '');
+        // }
+      },
+      '/auth/*': {
+        target: 'http://localhost:8080'
+        ,changeOrigin: true
+      }
+    }
   };
 
   return config;

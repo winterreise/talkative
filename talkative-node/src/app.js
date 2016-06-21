@@ -33,6 +33,10 @@ app
   .use(jsonResp())
   .use(body())
   .use(koaPg(config.DATABASE_URL))
+  .use(function*(next) {
+    console.log(`Requesting: ${this.req.url}`);
+    yield next;
+  })
   .listen(8080);
 
 // REQUIRE CONTROLLERS
