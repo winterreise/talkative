@@ -10,7 +10,13 @@
   <section class="readable">
     <div id="pitch" class="row">
       <div class="medium-6 large-5 columns">
-        <img class="hero-iphone" src="/img/silver_iphone.png"/>
+        <div class="hero-iphone">
+          <div class="base"/>
+          <div class="news" ng-class="$ctrl.frame === 0 ? '' : 'out'"/>
+          <div class="entertainment" ng-class="$ctrl.frame === 1 ? '' : 'out'"/>
+          <div class="fact1" ng-class="$ctrl.frame === 2 ? '' : 'out'"/>
+          <div class="fact2" ng-class="$ctrl.frame === 3 ? '' : 'out'"/>
+        </div>
       </div>
       <div class="medium-6 large-7 columns">
         <h2>What is Talkative?</h2>
@@ -36,10 +42,10 @@
         </p>
         <h3>It's <span class="emphasis">fun.</span></h3>
         <p>
-          Less dreading awkward silences, more talking. Less routine,
-          more discovery. Sounds like a winning combination to us.
+          Less dreading awkward silences, more talking; less routine,
+          more discovery. Those sound like winning combinations to us.
           Take Talkative with you in your pocket and jumpstart
-          conversations around you today. 
+          conversations around you today!
         </p>
       </div>
     </div>

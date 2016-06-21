@@ -92,14 +92,6 @@ a.g-signin[disabled] {
   background-image: url("../img/btn_google_signin_light_disabled_web@2x.png");
 }
 
-.hero-iphone {
-  height: 650px;
-  width: auto;
-  margin-left: auto;
-  margin-right: auto;
-  display: block;
-}
-
 #features .columns h3 {
   text-align: center;
   margin-top: 1rem;
@@ -189,4 +181,48 @@ section.user-preferences {
   padding: 0;
   display: inline-block;
   list-style-type: none;
+}
+
+div.hero-iphone {
+  height: 650px;
+  width: 320.8751px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  position: relative;
+}
+div.hero-iphone .base,
+div.hero-iphone .news,
+div.hero-iphone .entertainment,
+div.hero-iphone .fact1,
+div.hero-iphone .fact2 {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: 0.25s all ease-in;
+  opacity: 1;
+}
+div.hero-iphone .base {
+  background-image: url("../img/iphone.png");
+}
+div.hero-iphone .news {
+  background-image: url("../img/news.png");
+}
+div.hero-iphone .entertainment {
+  background-image: url("../img/entertainment.png");
+}
+div.hero-iphone .fact1 {
+  background-image: url("../img/facts.png");
+}
+div.hero-iphone .fact2 {
+  background-image: url("../img/facts2.png");
+}
+div.hero-iphone .out {
+  left: -256px;
+  opacity: 0;
 }
