@@ -1,3 +1,5 @@
+'use strict';
+
 const config = require('./config');
 const koa = require('koa');
 const app = koa();
@@ -109,62 +111,62 @@ app.use(views('./views', {
 }));
 
 // public routes
-var Router = require('koa-router');
+const Router = require('koa-router');
 
-var public = new Router();
+const publicRoutes = new Router();
 
-public.get('/', function*() {
+publicRoutes.get('/', function*() {
   this.body = yield this.render('login');
 });
 
 
 // POST /login
-public.post('/login',
+publicRoutes.post('/login',
   passport.authenticate('local', {
     successRedirect: '/app',
     failureRedirect: '/'
   })
 );
 
-public.get('/logout', function*(next) {
+publicRoutes.get('/logout', function*(next) {
   this.logout();
   this.redirect('/');
 });
 
-public.get('/auth/facebook',
+publicRoutes.get('/auth/facebook',
   passport.authenticate('facebook')
 );
 
-public.get('/auth/facebook/callback',
+publicRoutes.get('/auth/facebook/callback',
   passport.authenticate('facebook', {
-    successRedirect: '/app',
+    successRedirect: '/#/dashboard',
     failureRedirect: '/'
   })
 );
 
-public.get('/auth/twitter',
+publicRoutes.get('/auth/twitter',
   passport.authenticate('twitter')
 );
 
-public.get('/auth/twitter/callback',
+publicRoutes.get('/auth/twitter/callback',
   passport.authenticate('twitter', {
-    successRedirect: '/app',
+    successRedirect: '/#/dashboard',
     failureRedirect: '/'
   })
 );
 
-public.get('/auth/google',
+publicRoutes.get('/auth/google',
   passport.authenticate('google')
 );
 
-public.get('/auth/google/callback',
+publicRoutes.get('/auth/google/callback',
   passport.authenticate('google', {
-    successRedirect: '/app',
+    successRedirect: '/#/dashboard',
     failureRedirect: '/'
   })
 );
 
-app.use(public.middleware());
+app.use(publicRoutes.middleware());
 
 // Require authentication for now
 app.use(function*(next) {

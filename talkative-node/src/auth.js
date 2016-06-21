@@ -1,3 +1,5 @@
+'use strict';
+
 const passport = require('koa-passport');
 
 const testUser = { id: 1, username: 'test' };

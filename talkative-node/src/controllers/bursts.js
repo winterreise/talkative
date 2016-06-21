@@ -1,3 +1,5 @@
+'use strict';
+
 // BURSTS CONTROLLER
 
 class Burst {

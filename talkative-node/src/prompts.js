@@ -1,3 +1,5 @@
+'use strict';
+
 // PROMPTS CONTROLLER
 
 class Prompt {
