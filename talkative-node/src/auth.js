@@ -3,7 +3,7 @@
 const passport = require('koa-passport');
 
 passport.serializeUser(function(user, done) {
-  done(null, testUser.id);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
