@@ -2,12 +2,16 @@
 
 const passport = require('koa-passport');
 
+var user = { id: 1, username: 'test' }
+
 passport.serializeUser(function(user, done) {
-  done(null, testUser.id);
+  console.log(user);
+  done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  done(null, user);
+  console.log(id);
+  done(null, id);
 });
 
 const FacebookStrategy = require('passport-facebook').Strategy;
