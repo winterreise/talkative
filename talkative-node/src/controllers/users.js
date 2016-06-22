@@ -47,6 +47,7 @@ class User {
     }
   }
 
+
   *create() {
     const firstQuery = `SELECT id FROM users WHERE id = ${this.params.id}`;
     const result = yield this.pg.db.client.query_(firstQuery);
@@ -174,9 +175,9 @@ function generateBursts(userId,frequency,newsWeight,factsWeight,entertainmentWei
               console.log(prompts[i]);
               console.log(prompts[i+1]);
               console.log(prompts[i+2]);
-              console.log('------------;')
+              console.log('------------');
 
-              let queryString = `INSERT INTO bursts (user_id, prompt_ids) VALUES (${userId},ARRAY[${prompts[i].id},${prompts[i+1].id},${prompts[i+2].id}],now());`;
+              let queryString = `INSERT INTO bursts (user_id, prompt_ids, created_at) VALUES (${userId},ARRAY[${prompts[i].id},${prompts[i+1].id},${prompts[i+2].id}],now());`;
 
               client.query(queryString, function(errors, result) {
                 console.log(errors);

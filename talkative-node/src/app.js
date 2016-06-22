@@ -24,8 +24,7 @@ const bodyParser = require('koa-bodyparser');
 app.use(bodyParser());
 
 // authentication
-require('./auth');
-const passport = require('koa-passport');
+const passport = require('./auth');
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -134,8 +133,22 @@ router.get('/api/v1/users/active', user.active);
 router.get('/api/v1/users/inactive', user.inactive);
 // USER CREATE (:id)
 router.post('/api/v1/user/:id', user.create);
+// GET USER
+router.post('/api/v1/user', function*(next) {
+  this.params = {
+    id: this.session.passport.user
+  };
+  yield next;
+}, user.update);
+// GET USER
+router.get('/api/v1/user', function*(next) {
+  this.params = {
+    id: this.session.passport.user
+  };
+  yield next;
+}, user.show);
 // UPDATE USER (:id)
-router.post('/api/v1/users/:id', user.update);
+// router.post('/api/v1/users/:id', user.update);
 // USER SHOW (:id)
 router.get('/api/v1/users/:id', user.show);
 
