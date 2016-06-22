@@ -37,6 +37,7 @@ class User {
   }
 
   *update(id) {
+    console.dir(this.request.body);
     let url = this.req._parsedUrl;
     let params = url.query.split('&');
     let paramsObj = {};
