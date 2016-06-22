@@ -12,6 +12,7 @@ pg.connect(`postgres://talkative-app.herokuapp.com:5432/${newName}`, function(er
     return console.error('error fetching client from pool', error);
   }
   client.query(`CREATE TABLE IF NOT EXISTS users (
+    id          numeric,
     phone       varchar,
     active      boolean,
     frequency   integer,
