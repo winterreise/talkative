@@ -6,16 +6,14 @@ module.exports = class UserService {
   get(id) {
     return this.$http({
       method: 'GET',
-      url: `/api/v1/users/${id}`
-    }).then((response) => {
-      // TODO implement
+      url: '/api/v1/user'
     });
   }
 
   update(id, profile) {
     return this.$http({
       method: 'POST',
-      url: `/api/v1/users/${id}`,
+      url: '/api/v1/user',
       data: profile
     }).then((response) => {
       // TODO implement

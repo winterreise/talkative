@@ -21,10 +21,10 @@ function fetchUserBursts(argument, queryString){
   // Create query to fetch all bursts, or just those for one user
   if (argument === 'ALL'){
     console.log('Quering all bursts...');
-    queryString = 'SELECT * FROM bursts';
+    queryString = 'SELECT * FROM bursts WHERE sent = FALSE';
   } else {
-    console.log(`Quering all bursts for user id ${arg}`);
-    queryString = `SELECT * FROM bursts WHERE user_id = ${arg}`;
+    console.log(`Quering all bursts for user id ${arg} AND sent = FALSE`);
+    queryString = `SELECT * FROM bursts WHERE user_id = ${arg} AND sent = FALSE`;
   }
 
   pg.connect(config.DATABASE_URL, function(error, client, done) {
