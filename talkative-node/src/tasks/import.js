@@ -45,10 +45,8 @@ function saveEntry(title, domain, ups, category, urlString){
       return console.error('error fetching client from pool', error);
     }
     client.query('INSERT INTO prompts (content, category, domain, url, ups) VALUES ($1, $2, $3, $4, $5)', [title, category, domain, urlString, ups], function(errors) {
-      //call `done()` to release the client back to the pool
       console.log('------------------------------');
       console.log(title);
-
       done();
       if(errors) {
         return console.error('error running query', errors);
