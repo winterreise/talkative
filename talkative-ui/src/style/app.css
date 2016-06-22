@@ -7,6 +7,14 @@ nav {
   border-radius: 0 0 25px 25px;
 }
 
+.logo {
+  color: #222;
+}
+
+.logo:hover {
+  color: #222;
+}
+
 h1 {
   font-family: 'Paytone One', sans-serif;;
   color: #222;
