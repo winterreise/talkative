@@ -32,6 +32,16 @@ class Burst {
     }
   }
 
+  *generate(userId) {
+    const result = yield this.pg.db.client.query_(`SELECT id,prompt_ids,sent_at,user_id FROM bursts WHERE user_id = ${userId}`);
+    if (result.rows.length === 0){
+      return this.jsonResp(404, `Could not find any bursts for user_id ${userId}.`);
+    } else {
+      const bursts = result.rows;
+      return this.jsonResp(200, bursts);
+    }
+  }
+
 
 };
 

@@ -132,10 +132,13 @@ router.get('/api/v1/users/', user.all);
 router.get('/api/v1/users/active', user.active);
 // INACTIVE USERS INDEX
 router.get('/api/v1/users/inactive', user.inactive);
+// USER CREATE (:id)
+router.post('/api/v1/user/:id', user.create);
 // UPDATE USER (:id)
-router.post('/api/v1/users/:id', body(), function*() {console.log(this.request.body);});// user.update);
+router.post('/api/v1/users/:id', user.update);
 // USER SHOW (:id)
 router.get('/api/v1/users/:id', user.show);
+
 
 
 // AUTHENTICATION
