@@ -66,16 +66,6 @@
         <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementFactsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.factsFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
-    <div class="row">
-      <p class="medium-3 large-2 columns content-label">
-        Romance
-      </p>
-      <div class="medium-9 large-10 columns">
-        <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementRomanceFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.romanceFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.romanceFreq">
-        <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementRomanceFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.romanceFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
-      </div>
-    </div>
     </fieldset>
     </form>
 
