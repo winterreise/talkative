@@ -15,19 +15,19 @@ module.exports = class UserPreferencesCtrl {
       {id: 'evenings', text: 'Evenings'}
     ];
 
-    // TODO this will be replaced asynchronously
-    // with the values from the backend as the
-    // component loads
-    this.freqEnabled = true;
-    this.phoneNumber = 1234567890;
-    this.promptInterval = this.frequencyOptions[1];
-    this.newsFreq = 2;
-    this.entertainmentFreq = 4;
-    this.factsFreq = 6;
-    this.romanceFreq = 10;
-
     this.editingPhoneNumber = false;
     this.$element = $element;
+
+    UserService.get()
+    .then((result) => {
+      console.dir(result);
+      this.freqEnabled = true;
+      this.phoneNumber = 1234567890;
+      this.newsFreq = 2;
+      this.entertainmentFreq = 4;
+      this.factsFreq = 6;
+      this.promptInterval = this.frequencyOptions[1];
+    });
   }
 
   togglePhoneNumber() {
@@ -40,8 +40,6 @@ module.exports = class UserPreferencesCtrl {
   decrementEntertainmentFreq() { this.entertainmentFreq -= 1; }
   incrementFactsFreq() { this.factsFreq += 1; }
   decrementFactsFreq() { this.factsFreq -= 1; }
-  incrementRomanceFreq() { this.romanceFreq += 1; }
-  decrementRomanceFreq() { this.romanceFreq -= 1; }
 
 
   // connect foundation to angular component lifecycle
