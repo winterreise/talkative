@@ -22,11 +22,22 @@ h2 {
 }
 
 a {
+  color: #ac7cd6;
   transition: 0.25s color linear;
+}
+a:hover {
+  color: #9341da;
 }
 
 .emphasis {
   color: rgb(89, 15, 112);
+}
+
+.button, input:checked~.switch-paddle {
+  background-color: #ac7cd6;
+}
+.button:hover {
+  background-color: #9341da;
 }
 
 section {

@@ -15,7 +15,7 @@ module.exports = class UserService {
   update(id, profile) {
     return this.$http({
       method: 'POST',
-      url: `/api,/v1/users/${id}`,
+      url: `/api/v1/users/${id}`,
       data: profile
     }).then((response) => {
       // TODO implement
