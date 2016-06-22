@@ -165,15 +165,7 @@ router.get('/', function *() {
 
 
 // POST /login
-
-router.post('/login',
-  passport.authenticate('local', {
-    successRedirect: '/app',
-    failureRedirect: '/'
-  })
-);
-
-router.get('/logout', function *() {
+router.get('/auth/logout', function *() {
   this.logout();
   this.redirect('/');
 });

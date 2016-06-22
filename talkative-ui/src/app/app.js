@@ -15,7 +15,13 @@ app.config(['$routeProvider',
         template: '<landing-page></landing-page>'
       }).
       when('/dashboard', {
-        template: '<user-prefs></user-prefs>'
+        template: '<user-prefs></user-prefs>',
+        // prevent visiting /dashboard when not logged in
+        resolve: {
+          'isLoggedIn': ['AuthService', (AuthService) => {
+            return AuthService.isLoggedIn();
+          }]
+        }
       }).
       otherwise('/');
   }
@@ -23,6 +29,7 @@ app.config(['$routeProvider',
 
 // Declare services
 app.factory('UserService', require('./services/user-service'));
+app.factory('AuthService', require('./services/auth-service'));
 
 // Declare components
 app
@@ -42,3 +49,17 @@ app
   template: require('./components/talkative-footer.html'),
   transclude: true
 });
+
+
+// Angular startup
+app.run(['$rootScope', '$location', 'AuthService',
+  ($rootScope, $location, AuthService) => {
+    AuthService.isLoggedIn()
+    // We're logged in!
+    .then(() => $location.path('/dashboard'))
+    // We're not logged in :(
+    .catch(() => $location.path('/'));
+
+    $rootScope.$on('$routeChangeError', () => $location.path('/'));
+  }
+]);
