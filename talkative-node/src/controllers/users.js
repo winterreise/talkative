@@ -41,7 +41,7 @@ class User {
     const result = yield this.pg.db.client.query_(firstQuery);
     if (result.rows.length === 0){
       // User record doesn't already exist, so let's create one.
-      let query = `INSERT INTO users (id,active,frequency,newsweight,entertainmentweight,factsweight) VALUES (${this.params.id},FALSE,10,25,25,25);`;
+      let query = `INSERT INTO users (id,active,frequency,newsweight,entertainmentweight,factsweight) VALUES (${this.params.id},FALSE,10,5,5,5);`;
       let newUser = yield this.pg.db.client.query_(query);
       console.log('User created.');
     } else {
