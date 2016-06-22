@@ -16,10 +16,9 @@ pg.connect(`postgres://talkative-app.herokuapp.com:5432/${newName}`, function(er
     phone       varchar,
     active      boolean,
     frequency   integer,
-    news_weight  integer,
-    entertainment_weight integer,
-    facts_weight integer,
-    romance_weight integer
+    newsweight  integer,
+    entertainmentweight integer,
+    factsweight integer
 );
 
 CREATE TABLE IF NOT EXISTS prompts (
