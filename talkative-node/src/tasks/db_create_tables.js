@@ -31,7 +31,8 @@ CREATE TABLE IF NOT EXISTS prompts (
 );
 
 CREATE TABLE IF NOT EXISTS bursts (
-    user_id integer,
+    id SERIAL PRIMARY KEY,
+    user_id numeric,
     prompt_ids integer[],
     sent boolean default FALSE,
     sent_at date,
@@ -39,13 +40,9 @@ CREATE TABLE IF NOT EXISTS bursts (
 );
 
 CREATE TABLE IF NOT EXISTS histories (
-    user_id integer,
+    user_id numeric,
     prompt_id integer
-);
-
---And add an ID column to bursts
-
-ALTER TABLE bursts ADD COLUMN id SERIAL PRIMARY KEY;`, function(errors) {
+);`, function(errors) {
     //call `done()` to release the client back to the pool
 
     done();
