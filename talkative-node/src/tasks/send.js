@@ -61,7 +61,7 @@ function fetchPromptData(promptId, client, userId){
   client.query(`SELECT * FROM prompts WHERE id = ${promptId}`, function(e, queryResult) {
     queryResult.rows.forEach(function(prompt){
       let message = buildMessage(prompt);
-      sendMessage(message, userId);
+      sendMessage(message, userId, promptId, client);
     });
   });
 }
@@ -71,7 +71,7 @@ function buildMessage(prompt){
   return `${prompt.category.trim()}: ${prompt.content} (${prompt.url})`;
 }
 
-function sendMessage(message){
+function sendMessage(message, userId, promptId, client){
   console.log('Sending message...');
   twilioClient.messages.create({
       body: message,
@@ -83,5 +83,12 @@ function sendMessage(message){
       console.log(message);
       console.log('--------------------------------------------------');
       console.log(`Message sent. ID is: ${response.sid}`);
+      createHistory(userId,promptId,client);
+  });
+}
+
+function createHistory(userId,promptId,client){
+  client.query(`INSERT INTO histories (user_id,prompt_id) VALUES (${userId},${promptId});`, function(e, queryResult) {
+    console.dir(queryResult);
   });
 }
