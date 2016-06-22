@@ -2,9 +2,10 @@
 
 const passport = require('koa-passport');
 const creds = require('../creds');
+const config = require('./config');
+const request = require('request');
 
 passport.serializeUser(function(user, done) {
-  // TODO do nothing
   done(null, user.id);
 });
 
@@ -13,29 +14,6 @@ passport.deserializeUser(function(id, done) {
   done(null, id);
 });
 
-// const FacebookStrategy = require('passport-facebook').Strategy;
-// passport.use(new FacebookStrategy({
-//     clientID: '600680406767470',
-//     clientSecret: 'ab2b159cf0a51919ed9406a753330857',
-//     callbackURL: 'http://localhost:' + (process.env.PORT || 8080) + '/auth/facebook/callback'
-//   },
-//   function(token, tokenSecret, profile, done) {
-//     // retrieve user ...
-//     done(null, user);
-//   }
-// ));
-//
-// const TwitterStrategy = require('passport-twitter').Strategy;
-// passport.use(new TwitterStrategy({
-//     consumerKey: 'HYQU2eZkD89TbS8qPtlXM6tZM',
-//     consumerSecret: 'DXO12sJBExqG69WYi3G9dC201gyMOXDcf7rIIENygGB90G9eEX',
-//     callbackURL: 'http://localhost:' + (process.env.PORT || 8080) + '/auth/twitter/callback'
-//   },
-//   function(token, tokenSecret, profile, done) {
-//     // retrieve user ...
-//     done(null, user);
-//   }
-// ));
 
 const GoogleStrategy = require('passport-google-oauth2').Strategy;
 passport.use(new GoogleStrategy({
@@ -45,7 +23,14 @@ passport.use(new GoogleStrategy({
   },
   function(accessToken, refreshToken, profile, done) {
     // retrieve user ...
-    // TODO insert profile into db with id
+    console.dir(profile.id);
+    let url = `${config.API_URL}/user/${profile.id}`;
+    console.log(url);
+    request.post(url, (err, response, body) => {
+      console.dir(response);
+    }).on('error', (e) => {
+        console.log('Got error: ' + e.message);
+     });
     done(null, profile);
   }
 ));
