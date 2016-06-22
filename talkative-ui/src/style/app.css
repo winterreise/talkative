@@ -50,6 +50,10 @@ section.readable {
   margin: 0 auto;
 }
 
+hr {
+  padding-bottom: 10px;
+}
+
 header#page-header {
   height: 500px;
   color: #fff;
