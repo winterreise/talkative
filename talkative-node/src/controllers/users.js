@@ -44,7 +44,7 @@ class User {
     params.forEach(function(p){
       paramsObj[p.split('=')[0]] = p.split('=')[1];
     });
-    const result = yield this.pg.db.client.query_(`UPDATE users SET phone = ${paramsObj.phone}, frequency = ${paramsObj.frequency}, active = ${paramsObj.active}, factsweight = ${paramsObj.factsweight}, entertainmentweight = ${paramsObj.entertainmentweight}, newsweight = ${paramsObj.newsweight} WHERE id = ${id}`);
+    const result = yield this.pg.db.client.query_(`UPDATE users SET phone = ${paramsObj.phone}, frequency = ${paramsObj.frequency}, active = ${paramsObj.active}, factsweight = ${paramsObj.factsweight}, entertainmentweight = ${paramsObj.entertainmentweight}, newsweight = ${paramsObj.newsweight} WHERE id = ${this.params.id}`);
     if (result.rowCount === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
