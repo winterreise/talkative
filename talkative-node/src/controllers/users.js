@@ -88,8 +88,9 @@ class User {
     if (result.rowCount === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
-      // TO DO Return actual user, not the params
-      return this.jsonResp(200, paramsObj);
+      const user = result.rows[0];
+      console.log('result:', user);
+      return this.jsonResp(200, user);
     }
   }
 
