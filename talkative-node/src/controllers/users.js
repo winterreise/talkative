@@ -60,7 +60,6 @@ class User {
     // Fetch user's previous phone number....
     const previousUser = yield this.pg.db.client.query_(`SELECT phone FROM users WHERE id = ${this.params.id}`);
     const previousPhone = previousUser.rows[0].phone;
-
     // Make params object with form submission data...
     let url = this.req._parsedUrl;
     let params = url.query.split('&');
@@ -88,8 +87,10 @@ class User {
     if (result.rowCount === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
-      // TO DO Return actual user, not the params
-      return this.jsonResp(200, paramsObj);
+      const user = result.rows[0];
+      console.log('result:', user);
+      generateBursts(user.id, user.frequency, user.newsweight, user.factsweight, user.entertainmentweight);
+      return this.jsonResp(200, user);
     }
   }
 
@@ -100,3 +101,10 @@ class User {
 };
 
 module.exports = User;
+
+// HELPER METHODS
+
+
+function generateBursts(id,frequency,newsweight,factsweight,entertainmentweight){
+// TODO
+}
