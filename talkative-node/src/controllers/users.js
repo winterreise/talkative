@@ -37,7 +37,7 @@ class User {
   }
 
   *show() {
-    const result = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active FROM users WHERE id = ${this.params.id}`);
+    const result = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active,newsweight,entertainmentweight,factsweight) FROM users WHERE id = ${this.params.id}`);
     if (result.rows.length === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
