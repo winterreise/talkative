@@ -117,8 +117,8 @@ function generateBursts(userId,frequency,newsWeight,factsWeight,entertainmentWei
 
   // Query DB for new bursts....
   const dayMinutes = 60 * 24; // Number of minutes in 24 hours
-  const numBursts  = Math.ceil(dayMinutes / frequency); // Number of bursts for a 24 hour period
-  const numPrompts = numBursts * 5; // More than the number of prompts we will need to build bursts.
+  const numBursts  = 10; // Number of bursts for a 24 hour period
+  const numPrompts = numBursts * 3; // More than the number of prompts we will need to build bursts.
 
   pg.connect(config.DATABASE_URL, function(error, client, done) {
 
@@ -126,7 +126,9 @@ function generateBursts(userId,frequency,newsWeight,factsWeight,entertainmentWei
 
     // News Query
     client.query(`SELECT id FROM prompts WHERE category = 'news' ORDER BY id DESC LIMIT ${numPrompts};`, function(errors, result) {
+
       let newsPrompts = result.rows;
+      console.log(newsPrompts);
       // Facts Query
       client.query(`SELECT id FROM prompts WHERE category = 'facts' ORDER BY id DESC LIMIT ${numPrompts};`, function(errors, result) {
         let factsPrompts = result.rows;

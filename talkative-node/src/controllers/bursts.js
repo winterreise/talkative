@@ -31,7 +31,7 @@ class Burst {
 
   *test() {
     console.log(this.session.passport.user);
-    const result = yield this.pg.db.client.query_(`SELECT id,prompt_ids,sent,user_id FROM bursts WHERE NOT sent AND user_id = ${this.session.passport.user}`);
+    const result = yield this.pg.db.client.query_(`SELECT id,prompt_ids,sent,user_id FROM bursts WHERE NOT sent AND user_id = ${this.session.passport.user} ORDER BY id DESC`);
     const user = yield this.pg.db.client.query_(`SELECT id,phone FROM users WHERE id = ${this.session.passport.user}`);
 
     // MARK TEST BURST AS SENT SO WE DON'T KEEP SENDING THE SAME ONES OVER AND OVER

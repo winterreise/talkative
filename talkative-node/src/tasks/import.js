@@ -3,13 +3,13 @@
 const config = require('../config');
 const request = require('request');
 const pg = require('pg');
-const sources = ['todayilearned','news','entertainment'];
+const sources = ['todayilearned','news','entertainment','Positive_News','upliftingnews','news_etc'];
 
 console.log('Starting import...');
 
 function fetchData(){
   sources.forEach(function(source){
-    let url = 'https://www.reddit.com/r/' + source + '/search.json?restrict_sr=on&t=all&limit=100';
+    let url = 'https://www.reddit.com/r/' + source + '/search.json?restrict_sr=on&t=all&&sort=newlimit=100';
     request(url, (err, response, body) => {
         let parsedBody = JSON.parse(body);
         let entries = parsedBody.data.children;
@@ -34,6 +34,16 @@ function prepareEntries(entries){
         if (category === 'todayilearned') {
           category = 'facts';
         }
+        if (category === 'Positive_News') {
+          category = 'news'
+        }
+        if (category === 'news_etc') {
+          category = 'news'
+        }
+        if (category === 'UpliftingNews') {
+          category = 'news'
+        }
+
         saveEntry(title, domain, ups, category, urlString);
   });
 }
@@ -46,7 +56,8 @@ function saveEntry(title, domain, ups, category, urlString){
     }
     client.query('INSERT INTO prompts (content, category, domain, url, ups) VALUES ($1, $2, $3, $4, $5)', [title, category, domain, urlString, ups], function(errors) {
       console.log('------------------------------');
-      console.log(title);
+      //console.log(title);
+      console.log(category);
       done();
       if(errors) {
         return console.error('error running query', errors);
