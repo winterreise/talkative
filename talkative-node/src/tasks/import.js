@@ -56,8 +56,7 @@ function saveEntry(title, domain, ups, category, urlString){
     }
     client.query('INSERT INTO prompts (content, category, domain, url, ups) VALUES ($1, $2, $3, $4, $5)', [title, category, domain, urlString, ups], function(errors) {
       console.log('------------------------------');
-      //console.log(title);
-      console.log(category);
+      console.log(title);
       done();
       if(errors) {
         return console.error('error running query', errors);
