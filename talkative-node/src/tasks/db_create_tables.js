@@ -24,6 +24,7 @@ pg.connect(`${CONFIG.DATABASE_SERVER_URL}/${newName}`, function(error, client, d
 );
 
 CREATE TABLE IF NOT EXISTS prompts (
+    id SERIAL PRIMARY KEY,
     content text,
     category varchar,
     domain varchar,
