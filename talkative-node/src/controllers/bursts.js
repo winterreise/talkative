@@ -35,16 +35,16 @@ class Burst {
     const user = yield this.pg.db.client.query_(`SELECT id,phone FROM users WHERE id = ${this.session.passport.user}`);
 
     const burst = result.rows[0];
-    console.log('------------');
-    console.log(user.rows[0]);
-    console.log('------------');
+
 
     for(let i = 0; i < burst.prompt_ids.length; i++){
-      const prompt = yield this.pg.db.client.query_(`SELECT id,content FROM prompts WHERE id = ${burst.prompt_ids[i]}`);
+      const prompt = yield this.pg.db.client.query_(`SELECT id,content,category,url FROM prompts WHERE id = ${burst.prompt_ids[i]}`);
+      let message = buildMessage(prompt.rows[0]);
+
 
       setTimeout(() => {
         twilioClient.messages.create({
-            body: prompt.rows[0].content,
+            body: message,
             //to: '+16479193154',  // Pui Wing
             //to: '+14163195100', // Gabe
             to: user.rows[0].phone.trim(),
@@ -74,3 +74,10 @@ class Burst {
 };
 
 module.exports = Burst;
+
+
+// HELPER METHODS
+
+function buildMessage(prompt){
+  return `${prompt.category.trim()}: ${prompt.content} (${prompt.url})`;
+}
