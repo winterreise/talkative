@@ -1,7 +1,7 @@
 <main class="dashboard">
   <section class="user-preferences">
     <h1>
-      <a class="logo" href="/">Talkative</a>
+      <a class="logo" href="/#/">Talkative</a>
       <span class="logout-button">
         <a class="alert button" href="/auth/logout">Log Out</a>
       </span>
@@ -12,10 +12,10 @@
       <div class="input-group">
         <label ng-hide="$ctrl.editingPhoneNumber" class="input-group-label">Current</label>
         <label ng-show="$ctrl.editingPhoneNumber" class="input-group-label">Edit</label>
-        <input type="text" class="input-group-field" ng-model="$ctrl.phoneNumber" ng-disabled="!$ctrl.editingPhoneNumber"/>
+        <input type="text" class="input-group-field" ng-model="$ctrl.phoneNumber" ng-disabled="!$ctrl.editingPhoneNumber || $ctrl.saving"/>
         <div class="input-group-button">
-          <input type="button" value="Edit" class="button"  ng-hide="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
-          <input type="submit" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()"></button>
+          <input type="button" value="Edit" class="button"  ng-hide="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber()" ng-disabled="$ctrl.saving"></button>
+          <input type="submit" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber();$ctrl.save();" ng-disabled="$ctrl.saving"></button>
         </div>
       </div>
       <div class="test-button">
@@ -27,8 +27,8 @@
     <h3>
       Talkative Prompts
       <span class="switch prompt-toggle">
-        <input class="switch-input" id="on-off" type="checkbox" name="onOffSwitch" ng-model="$ctrl.freqEnabled">
-        <label class="switch-paddle" for="on-off">
+        <input class="switch-input" id="on-off" type="checkbox" name="onOffSwitch" ng-model="$ctrl.freqEnabled" ng-disabled="$ctrl.saving" ng-change="$ctrl.save()">
+        <label class="switch-paddle" for="on-off" ng-class="{'disabled': $ctrl.saving}">
           <span class="show-for-sr">test</span>
           <span class="switch-active" aria-hidden="true">On</span>
           <span class="switch-inactive" aria-hidden="true">Off</span>
@@ -38,14 +38,14 @@
 
     <h4>Content Mix</h4>
     <form>
-    <fieldset ng-disabled="!$ctrl.freqEnabled">
+    <fieldset ng-disabled="!$ctrl.freqEnabled || $ctrl.saving">
     <div class="row">
       <p class="medium-3 large-2 columns content-label">
         News
       </p>
       <div class="medium-9 large-10 columns">
         <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementNewsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.newsFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.newsFreq">
+        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.newsFreq" ng-change="$ctrl.save()">
         <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementNewsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.newsFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
@@ -55,7 +55,7 @@
       </p>
       <div class="medium-9 large-10 columns">
         <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementEntertainmentFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.entertainmentFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.entertainmentFreq">
+        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.entertainmentFreq" ng-change="$ctrl.save()">
         <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementEntertainmentFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.entertainmentFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
@@ -65,7 +65,7 @@
       </p>
       <div class="medium-9 large-10 columns">
         <button type="button" class="tiny secondary button" ng-click="$ctrl.decrementFactsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.factsFreq == 0"><i class="fa fa-minus" aria-hidden="true"></i></button>
-        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.factsFreq">
+        <input type="range" min="0" max="10" step="1" ng-model="$ctrl.factsFreq" ng-change="$ctrl.save()">
         <button type="button" class="tiny secondary button" ng-click="$ctrl.incrementFactsFreq()" ng-disabled="!$ctrl.freqEnabled || $ctrl.factsFreq == 10"><i class="fa fa-plus" aria-hidden="true"></i></button>
       </div>
     </div>
@@ -74,13 +74,14 @@
 
     <h4>Frequency</h4>
     <form>
-    <fieldset ng-disabled="!$ctrl.freqEnabled">
+    <fieldset ng-disabled="!$ctrl.freqEnabled || $ctrl.saving">
       <p>Your current prompt frequency is {{$ctrl.promptInterval.text.toLowerCase()}}.</p>
       <div>
         <label>Select a frequency:</label>
           <select
             ng-options="e.text for e in $ctrl.frequencyOptions track by e.id"
             ng-model="$ctrl.promptInterval"
+            ng-change="$ctrl.save()"
             required>
           </select>
       </div>

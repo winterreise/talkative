@@ -37,7 +37,7 @@ class User {
   }
 
   *show() {
-    const result = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active FROM users WHERE id = ${this.params.id}`);
+    const result = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active,newsweight,entertainmentweight,factsweight FROM users WHERE id = ${this.params.id}`);
     if (result.rows.length === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
@@ -51,7 +51,7 @@ class User {
   *create() {
     const firstQuery = `SELECT id FROM users WHERE id = ${this.params.id}`;
     const result = yield this.pg.db.client.query_(firstQuery);
-    if (result.rows.length === 0){
+    if (result.rows.length === 0) {
       // User record doesn't already exist, so let's create one.
       let query = `INSERT INTO users (id,active,frequency,newsweight,entertainmentweight,factsweight) VALUES (${this.params.id},FALSE,10,5,5,5);`;
       yield this.pg.db.client.query_(query);
@@ -63,29 +63,25 @@ class User {
 
   *update() {
     // Fetch user's previous phone number....
+    console.log(`I.D. IS: ${this.params.id}`);
     const previousUser = yield this.pg.db.client.query_(`SELECT phone FROM users WHERE id = ${this.params.id}`);
+    console.log(previousUser.rows[0].phone);
     let previousPhone = previousUser.rows[0].phone;
+
     // Make params object with form submission data...
-    let url = this.req._parsedUrl;
-    let params = url.query.split('&');
-    let paramsObj = {};
-    params.forEach(function(p){
-      paramsObj[p.split('=')[0]] = p.split('=')[1];
-    });
-
     // Check if new phone value is different from previousUser
+
+    previousPhone = parseInt(previousPhone);
+    let nextPhone = parseInt(this.request.body.phone);
+
+    console.log(nextPhone);
     console.log(previousPhone);
-    console.log(paramsObj.phone);
-
-    previousPhone = parseInt(previousPhone.trim());
-    let nextPhone = parseInt(paramsObj.phone.trim());
-
     if (previousPhone !== nextPhone){
       // Number has changed, so we send a welcome message...
       twilioClient.messages.create({
           body: 'Welcome to Talkative!',
           to: '+14163195100',
-          // to: `+${paramsObj.phone}`,
+          // to: `+${this.request.body.phone}`,
           from: '+16474964226'
       }, function(err, response) {
           console.log(`Message sent. ID is: ${response.sid}`);
@@ -93,7 +89,7 @@ class User {
     }
 
     // Update user in DB....
-    let query = `UPDATE users SET phone = ${paramsObj.phone}, frequency = ${paramsObj.frequency}, active = ${paramsObj.active}, factsweight = ${paramsObj.factsweight}, entertainmentweight = ${paramsObj.entertainmentweight}, newsweight = ${paramsObj.newsweight} WHERE id = ${this.params.id}`;
+    let query = `UPDATE users SET phone = '${this.request.body.phone}', frequency = ${this.request.body.frequency}, active = ${this.request.body.active}, factsweight = ${this.request.body.factsweight}, entertainmentweight = ${this.request.body.entertainmentweight}, newsweight = ${this.request.body.newsweight} WHERE id = ${this.params.id}`;
     const result = yield this.pg.db.client.query_(query);
     const updateQuery = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active,newsweight,factsweight,entertainmentweight FROM users WHERE id = ${this.params.id}`);
     const user = updateQuery.rows[0];

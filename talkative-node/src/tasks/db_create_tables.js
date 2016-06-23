@@ -7,7 +7,9 @@ const request = require('request');
 const pg = require('pg');
 
 // IMPORTANT CHANGE NEW DB NAME CAREFULLY SO YOU DON'T OVER-WRITE STUFF
-pg.connect(`postgres://talkative-app.herokuapp.com:5432/${newName}`, function(error, client, done) {
+let newName = 'talkative';
+
+pg.connect(`${CONFIG.DATABASE_SERVER_URL}/${newName}`, function(error, client, done) {
   if(error) {
     return console.error('error fetching client from pool', error);
   }
@@ -16,13 +18,13 @@ pg.connect(`postgres://talkative-app.herokuapp.com:5432/${newName}`, function(er
     phone       varchar,
     active      boolean,
     frequency   integer,
-    news_weight  integer,
-    entertainment_weight integer,
-    facts_weight integer,
-    romance_weight integer
+    newsweight  integer,
+    entertainmentweight integer,
+    factsweight integer
 );
 
 CREATE TABLE IF NOT EXISTS prompts (
+    id SERIAL PRIMARY KEY,
     content text,
     category varchar,
     domain varchar,

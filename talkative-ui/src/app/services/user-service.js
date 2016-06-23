@@ -3,20 +3,20 @@ module.exports = class UserService {
     this.$http = $http;
   }
 
-  get(id) {
+  get() {
     return this.$http({
       method: 'GET',
       url: '/api/v1/user'
+    }).then((result) => {
+      return result.data.data;
     });
   }
 
-  update(id, profile) {
+  update(profile) {
     return this.$http({
       method: 'POST',
       url: '/api/v1/user',
       data: profile
-    }).then((response) => {
-      // TODO implement
     });
   }
 };

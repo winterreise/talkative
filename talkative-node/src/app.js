@@ -114,6 +114,8 @@ const burst = new Burst();
 // ALL BURSTS INDEX
 router.get('/api/v1/bursts/', burst.all);
 // SENT BURSTS INDEX FOR USER (:userId)
+router.post('/api/v1/burst', burst.test);
+// SENT BURSTS INDEX FOR USER (:userId)
 router.get('/api/v1/bursts/:userId/sent/', burst.sent);
 // UNSENT BURSTS INDEX FOR USER (:userId)
 router.get('/api/v1/bursts/:userId/unsent/', burst.unsent);
@@ -132,9 +134,9 @@ router.get('/api/v1/users/active', user.active);
 // INACTIVE USERS INDEX
 router.get('/api/v1/users/inactive', user.inactive);
 // USER CREATE (:id)
-router.post('/api/v1/user/:id', user.create);
+router.post('/api/v1/user/:id', body(), user.create);
 // GET USER
-router.post('/api/v1/user', function*(next) {
+router.post('/api/v1/user', body(), function*(next) {
   this.params = {
     id: this.session.passport.user
   };
@@ -148,7 +150,7 @@ router.get('/api/v1/user', function*(next) {
   yield next;
 }, user.show);
 // UPDATE USER (:id)
-// router.post('/api/v1/users/:id', user.update);
+router.post('/api/v1/users/:id', user.update);
 // USER SHOW (:id)
 router.get('/api/v1/users/:id', user.show);
 

@@ -2,8 +2,8 @@
 
 const passport = require('koa-passport');
 const creds = require('../creds');
-// const config = require('./config');
-// const request = require('request');
+const config = require('./config');
+const request = require('request');
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);
@@ -22,16 +22,15 @@ passport.use(new GoogleStrategy({
     callbackURL: creds.google.callbackURL
   },
   function(accessToken, refreshToken, profile, done) {
-    // // retrieve user ...
-    // console.dir(profile.id);
-    // let url = `${config.API_URL}/user/${profile.id}`;
-    // console.log(url);
-    // request.post(url, (err, response, body) => {
-    //   console.dir(response);
-    // }).on('error', (e) => {
-    //     console.log('Got error: ' + e.message);
-    //  });
-    done(null, profile);
+    // retrieve user ...
+    console.dir(profile.id);
+    let url = `${config.API_URL}/user/${profile.id}`;
+    request.post(url, () => {
+      done(null, profile);
+    }).on('error', (e) => {
+      console.log('Got error: ' + e.message);
+      done(e, null);
+    });
   }
 ));
 
