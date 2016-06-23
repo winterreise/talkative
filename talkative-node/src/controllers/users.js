@@ -89,7 +89,7 @@ class User {
     }
 
     // Update user in DB....
-    let query = `UPDATE users SET phone = ${this.request.body.phone}, frequency = ${this.request.body.frequency}, active = ${this.request.body.active}, factsweight = ${this.request.body.factsweight}, entertainmentweight = ${this.request.body.entertainmentweight}, newsweight = ${this.request.body.newsweight} WHERE id = ${this.params.id}`;
+    let query = `UPDATE users SET phone = '${this.request.body.phone}', frequency = ${this.request.body.frequency}, active = ${this.request.body.active}, factsweight = ${this.request.body.factsweight}, entertainmentweight = ${this.request.body.entertainmentweight}, newsweight = ${this.request.body.newsweight} WHERE id = ${this.params.id}`;
     const result = yield this.pg.db.client.query_(query);
     const updateQuery = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active,newsweight,factsweight,entertainmentweight FROM users WHERE id = ${this.params.id}`);
     const user = updateQuery.rows[0];
