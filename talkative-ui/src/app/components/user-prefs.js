@@ -1,32 +1,30 @@
 /* global $ */
 module.exports = class UserPreferencesCtrl {
   constructor($element, UserService) {
+    this.UserService = UserService;
+    this.$element = $element;
+    this.editingPhoneNumber = false;
+
     // lookup table of frequency choices
     this.frequencyOptions = [
-      {id: '5', text: 'Every 5 minutes'},
-      {id: '10', text: 'Every 10 minutes'},
-      {id: '15', text: 'Every 15 minutes'},
-      {id: '30', text: 'Every 30 minutes'},
-      {id: '60', text: 'Every 1 hour'},
-      {id: '120', text: 'Every 2 hours'},
-      {id: '180', text: 'Every 3 hours'},
-      {id: 'twice', text: 'Twice daily'},
-      {id: 'mornings', text: 'Mornings'},
-      {id: 'evenings', text: 'Evenings'}
+      {id: 5, text: 'Every 5 minutes'},
+      {id: 10, text: 'Every 10 minutes'},
+      {id: 15, text: 'Every 15 minutes'},
+      {id: 30, text: 'Every 30 minutes'},
+      {id: 60, text: 'Every 1 hour'},
+      {id: 120, text: 'Every 2 hours'},
+      {id: 180, text: 'Every 3 hours'}
     ];
 
-    this.editingPhoneNumber = false;
-    this.$element = $element;
-
     UserService.get()
-    .then((result) => {
-      console.dir(result);
-      this.freqEnabled = true;
-      this.phoneNumber = 1234567890;
-      this.newsFreq = 2;
-      this.entertainmentFreq = 4;
-      this.factsFreq = 6;
-      this.promptInterval = this.frequencyOptions[1];
+    .then((profile) => {
+      this.freqEnabled = profile.active;
+      this.phoneNumber = profile.phone;
+      this.newsFreq = profile.newsweight;
+      this.entertainmentFreq = profile.entertainmentweight;
+      this.factsFreq = profile.factsweight;
+      const option = this.frequencyOptions.filter((e) => e.id === profile.frequency);
+      this.promptInterval = option.length > 0 ? option[0] : this.frequencyOptions[2];
     });
   }
 
@@ -41,6 +39,24 @@ module.exports = class UserPreferencesCtrl {
   incrementFactsFreq() { this.factsFreq += 1; }
   decrementFactsFreq() { this.factsFreq -= 1; }
 
+  save() {
+    this.saving = true;
+    const data = {
+      phone: this.phoneNumber,
+      active: this.freqEnabled,
+      frequency: this.promptInterval.id,
+      newsweight: this.newsFreq,
+      entertainmentweight: this.entertainmentFreq,
+      factsweight: this.factsFreq
+    };
+    this.UserService.update(data)
+    .then(() => {
+      this.saving = false;
+    })
+    .catch(() => {
+      this.saving = false;
+    });
+  }
 
   // connect foundation to angular component lifecycle
   $postLink() {

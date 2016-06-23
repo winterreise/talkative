@@ -7,6 +7,8 @@ module.exports = class UserService {
     return this.$http({
       method: 'GET',
       url: '/api/v1/user'
+    }).then((result) => {
+      return result.data.data;
     });
   }
 
