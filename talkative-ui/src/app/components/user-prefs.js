@@ -32,22 +32,22 @@ module.exports = class UserPreferencesCtrl {
     this.editingPhoneNumber = !this.editingPhoneNumber;
   }
 
-  incrementNewsFreq() { this.newsFreq += 1; }
-  decrementNewsFreq() { this.newsFreq -= 1; }
-  incrementEntertainmentFreq() { this.entertainmentFreq += 1; }
-  decrementEntertainmentFreq() { this.entertainmentFreq -= 1; }
-  incrementFactsFreq() { this.factsFreq += 1; }
-  decrementFactsFreq() { this.factsFreq -= 1; }
+  incrementNewsFreq() { this.newsFreq = Number(this.newsFreq) + 1; }
+  decrementNewsFreq() { this.newsFreq = Number(this.newsFreq) - 1; }
+  incrementEntertainmentFreq() { this.entertainmentFreq = Number(this.entertainmentFreq) + 1; }
+  decrementEntertainmentFreq() { this.entertainmentFreq = Number(this.entertainmentFreq) - 1; }
+  incrementFactsFreq() { this.factsFreq = Number(this.factsFreq) + 1; }
+  decrementFactsFreq() { this.factsFreq = Number(this.factsFreq) - 1; }
 
   save() {
     this.saving = true;
     const data = {
-      phone: this.phoneNumber,
+      phone: this.phoneNumber ? this.phoneNumber.trim() : '',
       active: this.freqEnabled,
       frequency: this.promptInterval.id,
-      newsweight: this.newsFreq,
-      entertainmentweight: this.entertainmentFreq,
-      factsweight: this.factsFreq
+      newsweight: Number(this.newsFreq),
+      entertainmentweight: Number(this.entertainmentFreq),
+      factsweight: Number(this.factsFreq)
     };
     this.UserService.update(data)
     .then(() => {
