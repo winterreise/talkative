@@ -58,6 +58,10 @@ module.exports = class UserPreferencesCtrl {
     });
   }
 
+  test() {
+    this.UserService.testBurst();
+  }
+
   // connect foundation to angular component lifecycle
   $postLink() {
     $(this.$element).foundation();

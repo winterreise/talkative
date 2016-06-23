@@ -19,6 +19,13 @@ module.exports = class UserService {
       data: profile
     });
   }
+
+  testBurst() {
+    return this.$http({
+      method: 'POST',
+      url: '/api/v1/burst'
+    });
+  }
 };
 
 // minification-safe
