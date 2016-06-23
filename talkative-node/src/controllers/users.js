@@ -93,11 +93,13 @@ class User {
     const result = yield this.pg.db.client.query_(query);
     const updateQuery = yield this.pg.db.client.query_(`SELECT id,phone,frequency,active,newsweight,factsweight,entertainmentweight FROM users WHERE id = ${this.params.id}`);
     const user = updateQuery.rows[0];
+    generateBursts(user.id, parseInt(user.frequency), parseInt(user.newsweight), parseInt(user.factsweight), parseInt(user.entertainmentweight));
+
     if (result.rowCount === 0){
       return this.jsonResp(404, 'Could not find a user with that id.');
     } else {
       console.log('result:', user);
-      generateBursts(user.id, parseInt(user.frequency), parseInt(user.newsweight), parseInt(user.factsweight), parseInt(user.entertainmentweight));
+      console.log("UPDATED USERS");
       return this.jsonResp(200, user);
     }
   }
@@ -115,14 +117,35 @@ module.exports = User;
 
 function generateBursts(userId,frequency,newsWeight,factsWeight,entertainmentWeight){
 
+  if (frequency === 0) {
+    frequency = 10;
+  }
+
+  if (newsWeight === 0) {
+    newsWeight = 1;
+  }
+
+  if (factsWeight === 0) {
+    factsWeight = 1;
+  }
+
+  if (entertainmentWeight === 0) {
+    entertainmentWeight = 1;
+  }
+
+  
   // Query DB for new bursts....
   const dayMinutes = 60 * 24; // Number of minutes in 24 hours
   const numBursts  = 10; // Number of bursts for a 24 hour period
-  const numPrompts = numBursts * 3; // More than the number of prompts we will need to build bursts.
+  const numPrompts = numBursts * 4; // More than the number of prompts we will need to build bursts.
 
   pg.connect(config.DATABASE_URL, function(error, client, done) {
 
     if(error) {return console.error('error fetching client from pool', error);}
+
+    client.query(`DELETE FROM prompts WHERE id = ${userId}`, function(errors, queryResult) {
+      console.log(errors)
+    });
 
     // News Query
     client.query(`SELECT id FROM prompts WHERE category = 'news' ORDER BY id DESC LIMIT ${numPrompts};`, function(errors, result) {

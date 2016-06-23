@@ -137,6 +137,7 @@ router.get('/api/v1/users/inactive', user.inactive);
 router.post('/api/v1/user/:id', body(), user.create);
 // GET USER
 router.post('/api/v1/user', body(), function*(next) {
+  console.log('FRONTEND CALL TO UPDATE USER');
   this.params = {
     id: this.session.passport.user
   };
