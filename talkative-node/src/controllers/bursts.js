@@ -36,7 +36,7 @@ class Burst {
 
     const burst = result.rows[0];
     console.log('------------');
-    console.log(burst.prompt_ids);
+    console.log(user.rows[0]);
     console.log('------------');
 
     for(let i = 0; i < burst.prompt_ids.length; i++){
@@ -47,7 +47,7 @@ class Burst {
             body: prompt.rows[0].content,
             //to: '+16479193154',  // Pui Wing
             //to: '+14163195100', // Gabe
-            to: user.phone.trim(),
+            to: user.rows[0].phone.trim(),
             from: '+16474964226' // From a valid Twilio number
         }, function(err, response) {
             console.log('--------------------------------------------------');
