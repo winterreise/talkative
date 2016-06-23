@@ -121,19 +121,14 @@ function generateBursts(userId,frequency,newsWeight,factsWeight,entertainmentWei
     frequency = 10;
   }
 
-  if (newsWeight === 0) {
+  if (newsWeight === 0 && factsWeight === 0 && entertainmentWeight === 0) {
     newsWeight = 1;
-  }
-
-  if (factsWeight === 0) {
     factsWeight = 1;
-  }
-
-  if (entertainmentWeight === 0) {
     entertainmentWeight = 1;
   }
 
-  
+
+
   // Query DB for new bursts....
   const dayMinutes = 60 * 24; // Number of minutes in 24 hours
   const numBursts  = 10; // Number of bursts for a 24 hour period
