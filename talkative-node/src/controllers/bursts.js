@@ -30,28 +30,30 @@ class Burst {
   }
 
   *test() {
-    console.log(this.session.passport);
-    const result = yield this.pg.db.client.query_(`SELECT id,prompt_ids,sent,user_id FROM bursts WHERE NOT sent AND user_id = 105654248664474896590`);
-    const user = yield this.pg.db.client.query_(`SELECT id,phone FROM users WHERE id = 105654248664474896590`);
+    console.log(this.session.passport.user);
+    const result = yield this.pg.db.client.query_(`SELECT id,prompt_ids,sent,user_id FROM bursts WHERE NOT sent AND user_id = ${this.session.passport.user}`);
+    const user = yield this.pg.db.client.query_(`SELECT id,phone FROM users WHERE id = ${this.session.passport.user}`);
 
     const burst = result.rows[0];
+    console.log('------------');
+    console.log(burst.prompt_ids);
+    console.log('------------');
 
-    burst.prompt_ids.forEach(function *(id){
-      const prompt = yield this.pg.db.client.query_(`SELECT id,phone FROM prompts id = ${id}`);
+    for(let i = 0; i < burst.prompt_ids.length; i++){
+      const prompt = yield this.pg.db.client.query_(`SELECT id,content FROM prompts WHERE id = ${burst.prompt_ids[i]}`);
 
       twilioClient.messages.create({
-          body: prompt.content,
+          body: prompt.rows[0].content,
           //to: '+16479193154',  // Pui Wing
-          //to: `+14163195100`', // Gabe
-          to: user.phone,
+          to: '+14163195100', // Gabe
+          // to: user.phone,
           from: '+16474964226' // From a valid Twilio number
       }, function(err, response) {
           console.log('--------------------------------------------------');
-          console.log(message);
+          console.log(err);
           console.log('--------------------------------------------------');
-          console.log(`Message sent. ID is: ${response.sid}`);
       });
-    });
+    }
 
 
     return this.jsonResp(200, "Burst sent.");
