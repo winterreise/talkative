@@ -71,9 +71,11 @@ class User {
     // Make params object with form submission data...
     // Check if new phone value is different from previousUser
 
-    previousPhone = parseInt(previousPhone.trim());
+    previousPhone = parseInt(previousPhone);
     let nextPhone = parseInt(this.request.body.phone);
 
+    console.log(nextPhone);
+    console.log(previousPhone);
     if (previousPhone !== nextPhone){
       // Number has changed, so we send a welcome message...
       twilioClient.messages.create({
