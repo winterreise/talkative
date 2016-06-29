@@ -3,9 +3,7 @@ const router = require('angular-route'); //eslint-disable-line no-unused-vars
 
 require('../style/app.css');
 
-const MODULE_NAME = 'talkative';
-
-const app = angular.module(MODULE_NAME, ['ngRoute']);
+const app = angular.module('talkative', ['ngRoute']);
 
 // configure
 app.config(['$routeProvider',

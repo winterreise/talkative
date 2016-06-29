@@ -32,12 +32,12 @@ module.exports = class UserPreferencesCtrl {
     this.editingPhoneNumber = !this.editingPhoneNumber;
   }
 
-  incrementNewsFreq() { this.newsFreq = Number(this.newsFreq) + 1; }
-  decrementNewsFreq() { this.newsFreq = Number(this.newsFreq) - 1; }
-  incrementEntertainmentFreq() { this.entertainmentFreq = Number(this.entertainmentFreq) + 1; }
-  decrementEntertainmentFreq() { this.entertainmentFreq = Number(this.entertainmentFreq) - 1; }
-  incrementFactsFreq() { this.factsFreq = Number(this.factsFreq) + 1; }
-  decrementFactsFreq() { this.factsFreq = Number(this.factsFreq) - 1; }
+  incrementNewsFreq() { this.newsFreq = Number(this.newsFreq) + 1; this.save(); }
+  decrementNewsFreq() { this.newsFreq = Number(this.newsFreq) - 1; this.save(); }
+  incrementEntertainmentFreq() { this.entertainmentFreq = Number(this.entertainmentFreq) + 1; this.save(); }
+  decrementEntertainmentFreq() { this.entertainmentFreq = Number(this.entertainmentFreq) - 1; this.save(); }
+  incrementFactsFreq() { this.factsFreq = Number(this.factsFreq) + 1; this.save(); }
+  decrementFactsFreq() { this.factsFreq = Number(this.factsFreq) - 1; this.save(); }
 
   save() {
     this.saving = true;
