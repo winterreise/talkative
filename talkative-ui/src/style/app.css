@@ -147,6 +147,10 @@ footer#page-footer {
     border-top: 1px solid #cecece;
 }
 
+span.copyright {
+  font-size: 85%;
+}
+
 main.dashboard {
   background-image: url("../img/header_background.jpg");
   background-repeat: no-repeat;
