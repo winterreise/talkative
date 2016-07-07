@@ -119,6 +119,7 @@ a.g-signin[disabled] {
   text-align: center;
   margin-top: 1rem;
 }
+
 #features .columns img {
   display: block;
   margin: 0 auto;
@@ -157,6 +158,12 @@ main.dashboard {
   background-position: center center;
   background-size: cover;
   padding: 2rem 1rem;
+}
+
+.reveal img {
+  display: block;
+  margin: 0 auto;
+  padding-bottom: 1rem;
 }
 
 section.user-preferences {

@@ -58,9 +58,9 @@ module.exports = class UserPreferencesCtrl {
     });
   }
 
-  test() {
-    alert('Demo-lition, man!');
-  }
+  // test() {
+  //   alert('Demo-lition, man!');
+  // }
 
   // connect foundation to angular component lifecycle
   $postLink() {

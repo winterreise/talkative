@@ -18,9 +18,17 @@
           <input type="submit" value="Save" class="button" ng-show="$ctrl.editingPhoneNumber" ng-click="$ctrl.togglePhoneNumber();$ctrl.save();"></button>
         </div>
       </div>
-      <div class="test-button">
-        <button class="expanded button" ng-click="$ctrl.test()">Send Test Messages</button>
+      <div class="reveal" id="test-modal" data-reveal data-animation-in="slide-in-left" data-animation-out="slide-out-right">
+        <h1>This is not a test.</h1>
+        <p class="lead">...Actually, it's a final project for Lighthouse Labs.</p>
+        <img src="/img/bomb.png"/>
+        <p>Gabe and Pui Wing here. Thanks for checking out Talkative - it's been a blast challenging ourselves to build something this fun and memorable over the span of two weeks.</p>
+        <p>Turns out that maintaining this test button's functionality is slightly less fun in the wallet, as <a target="_blank" href="https://www.twilio.com/voice/pricing/ca">Twilio</a> would have it. That being said, we'd love to answer any questions you might have about our experience building Talkative, so feel free to hit us up on <a target="_blank" href="https://github.com/">GitHub</a> or <a target="_blank" href="https://www.linkedin.com">LinkedIn</a>!</p>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
+      <button class="expanded button" a data-open="test-modal">Send Test Messages</button>
     </form>
     <hr/>
 
