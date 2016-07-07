@@ -44,7 +44,7 @@ a:hover {
 .button, input:checked~.switch-paddle {
   background-color: #ac7cd6;
 }
-.button:hover {
+.button:hover, .button:focus {
   background-color: #9341da;
 }
 
