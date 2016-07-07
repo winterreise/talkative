@@ -59,7 +59,7 @@ module.exports = class UserPreferencesCtrl {
   }
 
   test() {
-    this.UserService.testBurst();
+    alert('Demo-lition, man!');
   }
 
   // connect foundation to angular component lifecycle

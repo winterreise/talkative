@@ -20,12 +20,12 @@ module.exports = class UserService {
     });
   }
 
-  testBurst() {
-    return this.$http({
-      method: 'POST',
-      url: '/api/v1/burst'
-    });
-  }
+  // testBurst() {
+  //   return this.$http({
+  //     method: 'POST',
+  //     url: '/api/v1/burst'
+  //   });
+  // }
 };
 
 // minification-safe
