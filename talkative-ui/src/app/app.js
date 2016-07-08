@@ -1,9 +1,11 @@
 const angular = require('angular'); // eslint-disable-line
 const router = require('angular-route'); //eslint-disable-line no-unused-vars
+const classified = require('ng-classified'); //eslint-disable-line no-unused-vars
 
 require('../style/app.css');
 
-const app = angular.module('talkative', ['ngRoute']);
+const app = angular.module('talkative', ['ngRoute', 'ngClassified']);
+app.constant('$classify', false);
 
 // configure
 app.config(['$routeProvider',

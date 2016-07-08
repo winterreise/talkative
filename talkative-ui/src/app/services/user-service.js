@@ -30,3 +30,5 @@ module.exports = class UserService {
 
 // minification-safe
 module.exports.$inject = ['$http'];
+
+module.exports.$classify = true;

@@ -11,6 +11,9 @@ const twilio = require('twilio');
 // APP CONFIG
 const app = koa();
 
+// static file serving
+app.use(require('koa-static')('public'), {});
+
 // trust proxy
 app.proxy = true;
 
@@ -167,21 +170,7 @@ router.get('/api/v1/checkauthentication', function*() {
 });
 
 
-// append view renderer
-var views = require('koa-render');
-app.use(views('./views', {
-  map: { html: 'handlebars' },
-  cache: false
-}));
-
-
 // PUBLIC ROUTES
-// HOME PAGE
-
-router.get('/', function *() {
-  this.body = yield this.render('login');
-});
-
 
 // POST /login
 router.get('/auth/logout', function *() {

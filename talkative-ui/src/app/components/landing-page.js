@@ -20,3 +20,5 @@ module.exports = class LandingPageCtrl {
 
 // minification-safe
 module.exports.$inject = ['$interval'];
+
+module.exports.$classify = true;

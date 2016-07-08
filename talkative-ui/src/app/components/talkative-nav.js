@@ -5,3 +5,5 @@ module.exports = class TalkativeNavCtrl {
 
 // minification-safe
 module.exports.$inject = [];
+
+module.exports.$classify = true;

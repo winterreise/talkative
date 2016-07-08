@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A workflow for Angular made with Webpack",
   "scripts": {
-    "build": "rimraf dist && webpack --bail --progress --profile",
+    "build": "rimraf ../talkative-node/public && webpack --bail --progress --profile",
     "server": "webpack-dev-server --history-api-fallback --inline --progress --port 3000",
     "test": "karma start",
     "test-watch": "karma start --auto-watch --no-single-run",
@@ -21,7 +21,8 @@
   "homepage": "https://github.com/Foxandxss/angular-webpack-workflow",
   "dependencies": {
     "angular": "1.5.6",
-    "angular-route": "1.5.6"
+    "angular-route": "1.5.6",
+    "ng-classified": "1.0.2"
   },
   "devDependencies": {
     "eslint": "2.12.0",

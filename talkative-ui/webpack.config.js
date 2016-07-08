@@ -41,7 +41,7 @@ module.exports = function makeWebpackConfig () {
    */
   config.output = isTest ? {} : {
     // Absolute output directory
-    path: __dirname + '/dist',
+    path: '../talkative-node/public',
 
     // Output path from the view of the page
     // Uses webpack-dev-server in development
@@ -86,7 +86,10 @@ module.exports = function makeWebpackConfig () {
       // Compiles ES6 and ES7 into ES5 code
       test: /\.js$/,
       loader: 'babel',
-      exclude: /node_modules/
+      exclude: /node_modules/,
+      query: {
+        presets: ['es2015']
+      }
     }, {
       // CSS LOADER
       // Reference: https://github.com/webpack/css-loader

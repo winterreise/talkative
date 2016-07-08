@@ -76,3 +76,5 @@ module.exports = class UserPreferencesCtrl {
 
 // minification-safe
 module.exports.$inject = ['$element', 'UserService'];
+
+module.exports.$classify = true;

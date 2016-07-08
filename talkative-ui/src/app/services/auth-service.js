@@ -13,3 +13,5 @@ module.exports = class AuthService {
 
 // minification-safe
 module.exports.$inject = ['$http'];
+
+module.exports.$classify = true;
